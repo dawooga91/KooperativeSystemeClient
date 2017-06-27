@@ -15,6 +15,10 @@ import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
  * Login-Status und bietet Zugriff auf den evtl. eingeloggten {@link Identity}.
  * Arbeitet auf der jeweiligen {@link VaadinSession}
  */
+/**
+ * @author droege_s
+ *
+ */
 @SpringComponent
 public class SessionManager {
 	private static final Logger LOG = LoggerFactory.getLogger(SessionManager.class);

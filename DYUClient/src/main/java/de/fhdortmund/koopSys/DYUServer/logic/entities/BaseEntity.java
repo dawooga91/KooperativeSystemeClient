@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
 /**
  * Basis-Entity, die den Primärschlüssel enthält.
  * 
- * @author breslauer_r
+ *
+ * @author droege_s
  *
  */
 @Data

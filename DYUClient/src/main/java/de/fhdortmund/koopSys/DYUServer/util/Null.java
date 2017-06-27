@@ -4,6 +4,10 @@ package de.fhdortmund.koopSys.DYUServer.util;
  * 
  * Helper class for null values
  */
+/**
+ * @author droege_s
+ *
+ */
 public class Null {
 
 	/**
