@@ -6,6 +6,12 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * Loginseite
+ * 
+ * @author droege_s
+ *
+ */
 @UIScope
 @SpringView(name = LoginView.NAME)
 public class LoginView extends VerticalLayout implements View {

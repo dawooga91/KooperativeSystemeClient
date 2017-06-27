@@ -6,6 +6,12 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.HorizontalLayout;
 
+/**
+ * MainView wird bei Start abgerufen
+ * 
+ * @author droege_s
+ *
+ */
 @UIScope
 @SpringView(name = MainView.NAME)
 public class MainView extends HorizontalLayout implements View {

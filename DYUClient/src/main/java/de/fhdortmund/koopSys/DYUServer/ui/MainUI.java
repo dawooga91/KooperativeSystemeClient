@@ -10,6 +10,12 @@ import com.vaadin.ui.UI;
 
 import de.fhdortmund.koopSys.DYUServer.ui.presenter.MainPresenter;
 
+/**
+ * MainUi der Anwendung
+ * 
+ * @author droege_s
+ *
+ */
 @SpringUI(path = "/")
 @Title("DYU-App")
 @Theme("default")
