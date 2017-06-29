@@ -1,10 +1,28 @@
 package de.fhdortmund.koopSys.DYUServer.ui.View;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.vaadin.data.Binder;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+
+import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
+import de.fhdortmund.koopSys.DYUServer.ui.listener.LoginListener;
 
 /**
  * Loginseite
@@ -17,9 +35,62 @@ import com.vaadin.ui.VerticalLayout;
 public class LoginView extends VerticalLayout implements View {
 	public static final String NAME = "de.fhdortmund.koopSys.DYUServer.ui.View.LoginView";
 
+	// Listener
+	@Autowired
+	private LoginListener loginListener;
+
+	// Components
+	private TextField tfUsername;
+	private Button btnLogin;
+
+	@PostConstruct
+	private void _init() {
+
+		setSizeFull();
+		FormLayout loginForm = new FormLayout();
+
+		// Textfield Username
+		tfUsername = new TextField("Username");
+		tfUsername.setIcon(FontAwesome.USER);
+		tfUsername.focus();
+		new Binder<String>().forField(tfUsername).withValidator(str -> str.length() <= 4, "At least 4 Characters");
+
+		// Bustton
+		HorizontalLayout footer = new HorizontalLayout();
+		btnLogin = new Button("Login");
+		btnLogin.addClickListener(getLoginListener());
+		btnLogin.setClickShortcut(KeyCode.ENTER);
+		footer.addComponent(btnLogin);
+
+		// LoginPanel Layout
+		VerticalLayout loginPanelLayout = new VerticalLayout();
+		loginPanelLayout.setMargin(true);
+		loginPanelLayout.addComponent(loginForm);
+
+		// loginPanel
+		Panel loginPanel = new Panel("Login");
+		loginPanel.setWidthUndefined();
+		loginPanel.setContent(loginPanelLayout);
+		addComponent(loginPanel);
+		setComponentAlignment(loginPanel, Alignment.MIDDLE_CENTER);
+
+	}
+
+	private ClickListener getLoginListener() {
+
+		return new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				User user = new User(tfUsername.getValue());
+
+				loginListener.login(user);
+			}
+		};
+	}
+
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -6,6 +6,8 @@ import javax.ws.rs.client.WebTarget;
 
 import org.springframework.stereotype.Component;
 
+import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
+
 @Component
 public class LoginRestClient {
 
@@ -16,6 +18,11 @@ public class LoginRestClient {
 	@PostConstruct
 	private void _init() {
 		target = ClientBuilder.newClient().target(RestClientConfiguration.BASE_PATH + SERVICE);
+
+	}
+
+	public void create(User user) {
+		// TODO Auto-generated method stub
 
 	}
 

@@ -1,5 +1,7 @@
 package de.fhdortmund.koopSys.DYUServer.ui.listener;
 
+import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
+
 /**
  * Listener für den Login
  * 
@@ -8,5 +10,5 @@ package de.fhdortmund.koopSys.DYUServer.ui.listener;
  */
 public interface LoginListener {
 
-	public void login(String name);
+	public void login(User user);
 }
