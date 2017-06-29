@@ -2,8 +2,10 @@ package de.fhdortmund.koopSys.DYUServer.service;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
@@ -21,9 +23,10 @@ public class LoginRestClient {
 
 	}
 
-	public void create(User user) {
-		// TODO Auto-generated method stub
-
+	public User create(User user) {
+		User responseUser = target.path("create").request().accept(MediaType.APPLICATION_JSON_VALUE)
+				.put(Entity.json(user), User.class);
+		return responseUser;
 	}
 
 }
