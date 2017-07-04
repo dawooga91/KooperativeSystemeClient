@@ -16,6 +16,7 @@ import de.fhdortmund.koopSys.DYUServer.ui.View.MainView;
  * Presenter für den MainView Hauptaufgabe ist die Änderung des Views
  * 
  * @author droege_s
+ * @param <lobbyPresenter>
  *
  */
 @VaadinPresenter(viewName = MainView.NAME)
@@ -23,11 +24,13 @@ public class MainPresenter extends Presenter<MainView> {
 
 	private SessionManager sessionManager;
 	private LoginPresenter loginPresenter;
+	private LobbyPresenter lobbyPresenter;
 
 	@Autowired
-	public MainPresenter(SessionManager sessionManager, LoginPresenter loginPresenter) {
+	public MainPresenter(SessionManager sessionManager, LoginPresenter loginPresenter, LobbyPresenter lobbyPresenter) {
 		this.sessionManager = sessionManager;
 		this.loginPresenter = loginPresenter;
+		this.lobbyPresenter = lobbyPresenter;
 
 	}
 
@@ -36,7 +39,7 @@ public class MainPresenter extends Presenter<MainView> {
 	 */
 	public void start() {
 		if (sessionManager.isLoggedIn()) {
-			// showLobby();
+			showLobby();
 		} else
 			showLogin();
 	}
@@ -47,7 +50,7 @@ public class MainPresenter extends Presenter<MainView> {
 	}
 
 	private void showLobby() {
-		// TODO Auto-generated method stub
+		getView().setView(lobbyPresenter.getView());
 
 	}
 
