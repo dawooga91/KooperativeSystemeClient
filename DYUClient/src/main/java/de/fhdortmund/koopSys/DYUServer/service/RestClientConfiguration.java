@@ -14,7 +14,7 @@ public class RestClientConfiguration {
 	/**
 	 * Pfad zum Server, der den ReST-Service anbietet.
 	 */
-	public static final String BASE_PATH = "http://localhost:8090/api";
+	public static final String BASE_PATH = "http://localhost:8091/api";
 
 	static {
 		log.info("Basepath => {}", BASE_PATH);

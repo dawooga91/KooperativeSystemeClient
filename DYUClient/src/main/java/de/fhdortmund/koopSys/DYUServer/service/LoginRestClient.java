@@ -9,11 +9,13 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class LoginRestClient {
 
-	private static final String SERVICE = "/login";
+	private static final String SERVICE = "/user";
 
 	private WebTarget target;
 
@@ -24,8 +26,10 @@ public class LoginRestClient {
 	}
 
 	public User create(User user) {
+		log.info("creatUserRest");
 		User responseUser = target.path("create").request().accept(MediaType.APPLICATION_JSON_VALUE)
 				.put(Entity.json(user), User.class);
+		log.info("Join User'{}'", responseUser);
 		return responseUser;
 	}
 
