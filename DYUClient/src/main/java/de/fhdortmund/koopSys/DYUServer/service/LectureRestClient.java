@@ -56,4 +56,18 @@ public class LectureRestClient {
 		return responseLecture;
 	}
 
+	public Lecture startNewPoll(long oid) {
+		Lecture lecture = target.path("poll/new/" + String.valueOf(oid)).request()
+				.accept(MediaType.APPLICATION_JSON_VALUE).get(Lecture.class);
+		return lecture;
+
+	}
+
+	public Lecture getPoll(long oid) {
+		Lecture lecture = target.path("poll/" + String.valueOf(oid)).request().accept(MediaType.APPLICATION_JSON_VALUE)
+				.get(Lecture.class);
+		return lecture;
+
+	}
+
 }
