@@ -11,6 +11,7 @@ import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
 import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
 import de.fhdortmund.koopSys.DYUServer.ui.Event.Event;
 import de.fhdortmund.koopSys.DYUServer.ui.View.MainView;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Presenter für den MainView Hauptaufgabe ist die Änderung des Views
@@ -19,6 +20,7 @@ import de.fhdortmund.koopSys.DYUServer.ui.View.MainView;
  * @param <lobbyPresenter>
  *
  */
+@Slf4j
 @VaadinPresenter(viewName = MainView.NAME)
 public class MainPresenter extends Presenter<MainView> {
 
@@ -38,18 +40,22 @@ public class MainPresenter extends Presenter<MainView> {
 	 * Wird zum starten ausgeführt
 	 */
 	public void start() {
+		log.info("start App");
 		if (sessionManager.isLoggedIn()) {
+			log.info("alreday Login");
 			showLobby();
 		} else
 			showLogin();
 	}
 
 	private void showLogin() {
+		log.info("open LoginView");
 		getView().setView(loginPresenter.getView());
 
 	}
 
 	private void showLobby() {
+		System.err.println("LobbyAufruf");
 		getView().setView(lobbyPresenter.getView());
 
 	}
@@ -57,6 +63,7 @@ public class MainPresenter extends Presenter<MainView> {
 	@EventBusListenerTopic(topic = Event.LOGIN)
 	@EventBusListenerMethod(scope = EventScope.SESSION)
 	public void onLogin(User user) {
+		log.info("try Login");
 		sessionManager.setIdentity(user);
 
 		showLobby();

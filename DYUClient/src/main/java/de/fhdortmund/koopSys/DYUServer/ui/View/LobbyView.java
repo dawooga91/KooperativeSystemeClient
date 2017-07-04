@@ -26,7 +26,6 @@ public class LobbyView extends VerticalLayout implements View {
 	private void _init() {
 
 		setSizeFull();
-		// TODO Auto-generated method stub
 
 	}
 

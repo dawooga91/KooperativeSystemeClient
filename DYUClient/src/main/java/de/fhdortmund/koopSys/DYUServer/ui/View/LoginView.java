@@ -23,6 +23,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.LoginListener;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Loginseite
@@ -30,6 +31,7 @@ import de.fhdortmund.koopSys.DYUServer.ui.listener.LoginListener;
  * @author droege_s
  *
  */
+@Slf4j
 @UIScope
 @SpringView(name = LoginView.NAME)
 public class LoginView extends VerticalLayout implements View {
@@ -89,6 +91,7 @@ public class LoginView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				log.info("Loginbtn pressed");
 				User user = new User(tfUsername.getValue());
 
 				loginListener.login(user);
