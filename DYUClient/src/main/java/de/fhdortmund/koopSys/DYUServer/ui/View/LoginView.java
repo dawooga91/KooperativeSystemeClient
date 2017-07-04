@@ -59,8 +59,9 @@ public class LoginView extends VerticalLayout implements View {
 		tfUsername.setIcon(FontAwesome.USER);
 		tfUsername.focus();
 		new Binder<String>().forField(tfUsername).withValidator(str -> str.length() <= 4, "At least 4 Characters");
+		loginForm.addComponent(tfUsername);
 
-		// Bustton
+		// Button
 		HorizontalLayout footer = new HorizontalLayout();
 		btnLogin = new Button("Login");
 		btnLogin.addClickListener(getLoginListener());
@@ -71,6 +72,7 @@ public class LoginView extends VerticalLayout implements View {
 		VerticalLayout loginPanelLayout = new VerticalLayout();
 		loginPanelLayout.setMargin(true);
 		loginPanelLayout.addComponent(loginForm);
+		loginPanelLayout.addComponent(footer);
 
 		// loginPanel
 		Panel loginPanel = new Panel("Login");
