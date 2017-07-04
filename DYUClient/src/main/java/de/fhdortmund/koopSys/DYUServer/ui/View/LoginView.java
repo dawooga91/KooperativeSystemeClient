@@ -33,6 +33,11 @@ import de.fhdortmund.koopSys.DYUServer.ui.listener.LoginListener;
 @UIScope
 @SpringView(name = LoginView.NAME)
 public class LoginView extends VerticalLayout implements View {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final String NAME = "de.fhdortmund.koopSys.DYUServer.ui.View.LoginView";
 
 	// Listener

@@ -1,0 +1,7 @@
+@mixin inspectortoolbar{
+	.inspectortoolbar{
+		background-color: #EFEFEF;
+		padding: 5pt 10pt 5pt 10pt;
+		border-bottom: 1px solid $background_color_3_2;
+	}
+}

@@ -1,0 +1,27 @@
+@mixin inspectorassignments{
+	.inspectorassignments{
+		
+		.infocontainer{
+			padding: 5pt 10pt 5pt 10pt;
+			font-weight: bold;
+			
+			.actualname{
+				color: $foreground_color_0_1;
+			}
+			
+			.actualinfo{
+				margin-left: 10pt;
+			}
+		}
+		
+		.v-table{
+			.v-table-body{
+				background-image: url("images/logo_kvemblem.svg");
+				background-repeat: no-repeat;
+				background-size: contain;
+				background-position: 50% 50%;
+			}
+		}
+		
+	}
+}

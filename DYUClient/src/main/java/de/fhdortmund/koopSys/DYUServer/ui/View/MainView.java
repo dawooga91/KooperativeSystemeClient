@@ -18,6 +18,10 @@ import com.vaadin.ui.HorizontalLayout;
 @UIScope
 @SpringView(name = MainView.NAME)
 public class MainView extends HorizontalLayout implements View {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final String NAME = "de.fhdortmund.koopSys.DYUServer.ui.View.MainView";
 
 	@PostConstruct
@@ -38,7 +42,6 @@ public class MainView extends HorizontalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 
 	}
 }

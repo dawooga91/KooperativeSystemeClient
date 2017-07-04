@@ -1,0 +1,68 @@
+@mixin inspector{
+	
+	.scrollpane{
+		border-style: solid;
+		border-width: 1pt;
+		border-color: $background_color_4_2;
+	}
+	
+	.horizontalline{
+		padding: 0px 0px 10px 0px;
+		border-bottom: 1px solid $background_color_3_2;
+	}
+	
+	.toolbarbutton{
+		border-style: none;
+		background: none;
+		box-shadow: none;
+	}
+	
+	.profileimage{
+		border-radius: 50%;
+  		border-style: solid;
+    	border-width: 1.5pt;
+    	box-shadow: 2pt 2pt 5pt 0px #aaa;
+	}
+	
+	.toolbarbutton:hover{
+		border-style: solid;
+	}
+	
+	.v-panel-caption{
+		background-color: $background_color_1_1;
+		@include background-image(linear-gradient(to bottom, $background_color_1_1 2%, $background_color_1_2 80%));
+		box-shadow: 0px 1px 0px $background_color_1_1 inset, 0px -1px 0px $background_color_1_2 inset;
+		font-weight: bold;
+		color: $foreground_color_1_1;
+	}
+	
+	.v-table{
+		.v-table-header-wrap, .v-table-footer-wrap, .v-table-header-drag{
+			background-color: $background_color_2_1;
+			background-image: none;
+			color: $foreground_color_2_1;
+			font-weight: bold;
+		}
+		
+		.v-table-body{
+			.v-table-row{
+				background-color: $background_color_5_2;
+				color: $foreground_color_5_1;
+			}
+			.v-table-row-odd{
+				background-color: $background_color_5_1;
+				color: $foreground_color_5_1;
+			}
+		}
+	}
+	
+	.v-generated-body &.v-app .v-app-loading{
+		height: 100%;
+		width: 100%;
+		background-image: url(images/logo_kvemblem.svg);
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-attachment: fixed;
+		background-size: contain;
+	}
+}

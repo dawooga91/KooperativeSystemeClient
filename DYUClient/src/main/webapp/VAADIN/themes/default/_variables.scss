@@ -1,0 +1,45 @@
+// Jeder Block sollte ein Farbschema innerhalb eines
+// Blocks realisieren.
+// Alle Bl�cke insgesamt sollten ein gemeinsames
+// Farbschema verfolgen.
+
+// Allgemeine Elemente
+$background_color_0_1: #DDDDDD;
+$background_color_0_2: white;
+$foreground_color_0_1: #55A51C;
+$foreground_color_0_2: green;
+
+$background_color_1_1: #55A51C;
+$background_color_1_2: green;
+$foreground_color_1_1: #DDDDDD;
+$foreground_color_1_2: white;
+// Allgemeine Elemente
+
+// Report Farben
+$background_color_2_1: #E4EFCF;
+$background_color_2_2: #F2F7E7;
+$foreground_color_2_1: #0D1B29;
+$foreground_color_2_2: #262F38;
+
+$background_color_3_1: #C2C4C8;
+$background_color_3_2: #D6D8DB;
+$foreground_color_3_1: #ADB1B6;
+$foreground_color_3_2: #AFD06F;
+
+$background_color_4_1: #999DA4;
+$background_color_4_2: #ADB1b6;
+$foreground_color_4_1: #47742F;
+$foreground_color_4_2: #7AB00F;
+
+$background_color_5_1: #C2C4C8;
+$background_color_5_2: #D6D8DB;
+$foreground_color_5_1: #262F38;
+$foreground_color_5_2: #5a646f;
+// Report Farben
+
+
+// Valo Einstellungen manipulieren
+$v-app-loading-text: "Zeiterfassung...";
+$v-background-color: hsl(210, 0%, 98%);
+$v-focus-color: $foreground_color_0_1;
+$v-app-background-color: hsl(210, 0%, 98%);

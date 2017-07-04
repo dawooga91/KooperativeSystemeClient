@@ -23,13 +23,11 @@ public class MainPresenter extends Presenter<MainView> {
 
 	private SessionManager sessionManager;
 	private LoginPresenter loginPresenter;
-	private DYUPresenter dyuPresenter;
 
 	@Autowired
-	public MainPresenter(SessionManager sessionManager, LoginPresenter loginPresenter, DYUPresenter dyuPresenter) {
+	public MainPresenter(SessionManager sessionManager, LoginPresenter loginPresenter) {
 		this.sessionManager = sessionManager;
 		this.loginPresenter = loginPresenter;
-		this.dyuPresenter = dyuPresenter;
 
 	}
 
@@ -38,7 +36,7 @@ public class MainPresenter extends Presenter<MainView> {
 	 */
 	public void start() {
 		if (sessionManager.isLoggedIn()) {
-			showLobby();
+			// showLobby();
 		} else
 			showLogin();
 	}

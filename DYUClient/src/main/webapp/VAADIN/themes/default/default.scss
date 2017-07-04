@@ -1,0 +1,17 @@
+@import "_variables.scss";
+@import "../valo/valo.scss";
+@import "inspector.scss";
+@import "inspectormenubar.scss";
+@import "inspectornavigation.scss";
+@import "inspectortoolbar.scss";
+@import "inspectorassignments.scss";
+
+
+@mixin default {
+	@include valo;
+	@include inspector;
+	@include inspectormenubar;
+	@include inspectornavigation;
+	@include inspectortoolbar;
+	@include inspectorassignments;
+}

@@ -3,6 +3,7 @@ package de.fhdortmund.koopSys.DYUServer.ui.presenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
 import org.vaadin.spring.navigator.Presenter;
+import org.vaadin.spring.navigator.annotation.VaadinPresenter;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
 import de.fhdortmund.koopSys.DYUServer.service.LoginRestClient;
@@ -16,6 +17,8 @@ import de.fhdortmund.koopSys.DYUServer.ui.listener.LoginListener;
  * @author droege_s
  *
  */
+
+@VaadinPresenter(viewName = LoginView.NAME)
 public class LoginPresenter extends Presenter<LoginView> implements LoginListener {
 
 	@Autowired
