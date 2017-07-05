@@ -12570,7 +12570,7 @@ div.v-layout.v-horizontal.v-widget {
 .v-generated-body .default.v-app .v-app-loading {
 	height: 100%;
 	width: 100%;
-	background-image: url(images/logo_kvemblem.svg);
+	background-image: url(imag/FH_Dortmund-logo.svg);
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-attachment: fixed;
@@ -12601,7 +12601,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .default .inspectorassignments .v-table .v-table-body {
-	background-image: url("images/FH_Dortmund-logo.svg");
+	background-image: url(imag/FH_Dortmund-logo.svg);
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: 50% 50%;

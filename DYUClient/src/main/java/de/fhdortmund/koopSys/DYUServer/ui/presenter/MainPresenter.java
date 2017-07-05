@@ -74,14 +74,14 @@ public class MainPresenter extends Presenter<MainView> {
 		showLobby();
 	}
 	
-	@EventBusListenerTopic(topic = Event.LECTURE_CREATE)
-	@EventBusListenerMethod(scope = EventScope.SESSION)
-	public void onCreateLecture()
-	{
-		log.info("CreatedLecture");
-		
-		showLectureAdminView();
-	}
-	
+//	@EventBusListenerTopic(topic = Event.LECTURE_CREATE)
+//	@EventBusListenerMethod(scope = EventScope.SESSION)
+//	public void onCreateLecture()
+//	{
+//		log.info("CreatedLecture");
+//		
+//		showLectureAdminView();
+//	}
+//	
 
 }
