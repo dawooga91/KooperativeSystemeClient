@@ -10,4 +10,5 @@ public abstract class Event {
 
 	public static final String LOGIN = "Login";
 	public static final String LOGOUT = "LOGOUT";
+	public static final String LECTURE_CREATE = "LECTURE_CREATE";
 }

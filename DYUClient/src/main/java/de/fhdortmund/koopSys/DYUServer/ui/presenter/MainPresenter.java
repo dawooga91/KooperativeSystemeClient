@@ -55,9 +55,14 @@ public class MainPresenter extends Presenter<MainView> {
 	}
 
 	private void showLobby() {
-		System.err.println("LobbyAufruf");
+		log.info("LobbyAufruf");
 		getView().setView(lobbyPresenter.getView());
 
+	}
+
+	private void showLectureAdminView() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@EventBusListenerTopic(topic = Event.LOGIN)
@@ -68,5 +73,15 @@ public class MainPresenter extends Presenter<MainView> {
 
 		showLobby();
 	}
+	
+	@EventBusListenerTopic(topic = Event.LECTURE_CREATE)
+	@EventBusListenerMethod(scope = EventScope.SESSION)
+	public void onCreateLecture()
+	{
+		log.info("CreatedLecture");
+		
+		showLectureAdminView();
+	}
+	
 
 }

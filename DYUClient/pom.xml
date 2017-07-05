@@ -56,11 +56,8 @@
 			<artifactId>vaadin-sass-compiler</artifactId>
 			<version>0.9.13</version>
 		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addon</groupId>
-			<artifactId>confirmdialog</artifactId>
-			<version>2.1.1</version>
-		</dependency>
+		
+		
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -71,6 +68,8 @@
 			<artifactId>scala-library</artifactId>
 			<version>2.11.0</version>
 		</dependency>
+		
+		
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
