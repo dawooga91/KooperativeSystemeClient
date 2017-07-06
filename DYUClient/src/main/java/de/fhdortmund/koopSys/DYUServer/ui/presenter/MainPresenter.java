@@ -27,12 +27,15 @@ public class MainPresenter extends Presenter<MainView> {
 	private SessionManager sessionManager;
 	private LoginPresenter loginPresenter;
 	private LobbyPresenter lobbyPresenter;
+	private NewLecturePresenter newLecturePresenter;
 
 	@Autowired
-	public MainPresenter(SessionManager sessionManager, LoginPresenter loginPresenter, LobbyPresenter lobbyPresenter) {
+	public MainPresenter(SessionManager sessionManager, LoginPresenter loginPresenter, LobbyPresenter lobbyPresenter,
+			NewLecturePresenter newLecturePresenter) {
 		this.sessionManager = sessionManager;
 		this.loginPresenter = loginPresenter;
 		this.lobbyPresenter = lobbyPresenter;
+		this.newLecturePresenter = newLecturePresenter;
 
 	}
 
@@ -62,7 +65,7 @@ public class MainPresenter extends Presenter<MainView> {
 
 	private void showLectureAdminView() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@EventBusListenerTopic(topic = Event.LOGIN)
@@ -73,15 +76,15 @@ public class MainPresenter extends Presenter<MainView> {
 
 		showLobby();
 	}
-	
-//	@EventBusListenerTopic(topic = Event.LECTURE_CREATE)
-//	@EventBusListenerMethod(scope = EventScope.SESSION)
-//	public void onCreateLecture()
-//	{
-//		log.info("CreatedLecture");
-//		
-//		showLectureAdminView();
-//	}
-//	
+
+	// @EventBusListenerTopic(topic = Event.LECTURE_CREATE)
+	// @EventBusListenerMethod(scope = EventScope.SESSION)
+	// public void onCreateLecture()
+	// {
+	// log.info("CreatedLecture");
+	//
+	// showLectureAdminView();
+	// }
+	//
 
 }
