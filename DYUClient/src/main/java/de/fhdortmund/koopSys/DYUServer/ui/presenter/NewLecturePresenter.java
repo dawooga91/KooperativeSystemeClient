@@ -17,6 +17,11 @@ import de.fhdortmund.koopSys.DYUServer.ui.View.NewLectureView;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.NewLectureListener;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Eingabemaske zum Anlegen einer Vorlesung
+ * 
+ * @author droege_s
+ */
 @Slf4j
 @VaadinPresenter(viewName = NewLectureView.NAME)
 public class NewLecturePresenter extends Presenter<NewLectureView> implements NewLectureListener {
@@ -33,7 +38,7 @@ public class NewLecturePresenter extends Presenter<NewLectureView> implements Ne
 
 	}
 
-	@EventBusListenerTopic(topic = Event.CREATE_LECTURE)
+	@EventBusListenerTopic(topic = Event.NEW_LECTURE)
 	@EventBusListenerMethod(scope = EventScope.SESSION)
 	public void onCreatedLecture() {
 		log.info("create new Lecture");

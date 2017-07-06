@@ -89,6 +89,11 @@ public class LoginView extends VerticalLayout implements View {
 
 		return new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				log.info("Loginbtn pressed");
