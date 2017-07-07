@@ -7,7 +7,11 @@ import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 import org.vaadin.spring.navigator.Presenter;
 import org.vaadin.spring.navigator.annotation.VaadinPresenter;
 
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
+
 import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
+import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
 import de.fhdortmund.koopSys.DYUServer.ui.Event.Event;
 import de.fhdortmund.koopSys.DYUServer.ui.View.MainView;
@@ -28,14 +32,16 @@ public class MainPresenter extends Presenter<MainView> {
 	private LoginPresenter loginPresenter;
 	private LobbyPresenter lobbyPresenter;
 	private NewLecturePresenter newLecturePresenter;
+	private LecturePresenter lecturePresenter;
 
 	@Autowired
 	public MainPresenter(SessionManager sessionManager, LoginPresenter loginPresenter, LobbyPresenter lobbyPresenter,
-			NewLecturePresenter newLecturePresenter) {
+			NewLecturePresenter newLecturePresenter,LecturePresenter lecturePresenter) {
 		this.sessionManager = sessionManager;
 		this.loginPresenter = loginPresenter;
 		this.lobbyPresenter = lobbyPresenter;
 		this.newLecturePresenter = newLecturePresenter;
+		this.lecturePresenter = lecturePresenter;
 
 	}
 
@@ -49,6 +55,12 @@ public class MainPresenter extends Presenter<MainView> {
 			showLobby();
 		} else
 			showLogin();
+	}
+
+	private void showLecture(Lecture lecture) {
+	lecturePresenter.setCurrentLecture(lecture);
+	getView().setView(lecturePresenter.getView());
+		
 	}
 
 	private void showLogin() {
@@ -77,14 +89,18 @@ public class MainPresenter extends Presenter<MainView> {
 		showLobby();
 	}
 
-	// @EventBusListenerTopic(topic = Event.LECTURE_CREATE)
-	// @EventBusListenerMethod(scope = EventScope.SESSION)
-	// public void onCreateLecture()
-	// {
-	// log.info("CreatedLecture");
-	//
-	// showLectureAdminView();
-	// }
-	//
+	@EventBusListenerTopic(topic = Event.JOIN)
+	@EventBusListenerMethod(scope = EventScope.SESSION)
+	public void onJoinLecture(Lecture lecture) {
+		showLecture(lecture);
+
+	}
+	
+	@EventBusListenerTopic(topic = Event.CREATE_LECTURE)
+	@EventBusListenerMethod(scope = EventScope.SESSION)
+	public void onCreateAdminLec(String string) {
+		log.info("CREAT_Lec");
+		//UI.getCurrent().addWindow(newLecturePresenter.getView());
+	}
 
 }

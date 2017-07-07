@@ -1,5 +1,7 @@
 package de.fhdortmund.koopSys.DYUServer.ui.Event;
 
+import org.vaadin.spring.events.EventScope;
+
 /**
  * Events, für den Eventbus
  * 
@@ -15,4 +17,7 @@ public abstract class Event {
 	// Vorlesung
 	public static final String CREATE_LECTURE = "CREATE_LECTURE";
 	public static final String NEW_LECTURE = "NEW_LECTURE";
+	public static final String JOIN = "JOIN";
+	public static final String CANCEL = "CANCEL";
+	
 }

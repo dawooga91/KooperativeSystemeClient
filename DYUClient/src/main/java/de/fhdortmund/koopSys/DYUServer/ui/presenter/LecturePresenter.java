@@ -16,6 +16,7 @@ public class LecturePresenter extends Presenter<LectureView> implements LectureL
 
 	@Autowired
 	LectureRestClient lectureClient;
+	private Lecture lecture;
 	
 	@Override
 	public void createNewLecture(Lecture lecture) {
@@ -27,4 +28,17 @@ public class LecturePresenter extends Presenter<LectureView> implements LectureL
 		
 	}
 
+	public void setCurrentLecture(Lecture lecture) {
+		this.lecture=(lectureClient.getLectureByOID(lecture.getOid()));
+	
+	}
+
+	public Lecture getLecture() {
+		return lecture;
+	}
+
+	
+	
+	
+	
 }
