@@ -8,6 +8,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 import de.fhdortmund.koopSys.DYUServer.ui.listener.AdminListener;
@@ -26,7 +27,17 @@ public class AdminView extends VerticalLayout implements View {
 
 	@PostConstruct
 	private void _init() {
-		// TODO Auto-generated method stub
+		setSizeFull();
+		
+		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		
+		setCaption("Vorlesung");
+		
+		
+		
+		
+		
+		
 
 	}
 

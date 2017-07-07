@@ -49,7 +49,7 @@ public class LectureRestClient {
 		return lectures;
 	}
 
-	public Lecture saveCategory(Lecture lecture) {
+	public Lecture saveLecture(Lecture lecture) {
 		Lecture responseLecture = target.path("create").request().accept(MediaType.APPLICATION_JSON_VALUE)
 				.put(Entity.json(lecture), Lecture.class);
 		log.info("Save Lecture '{}'", responseLecture);

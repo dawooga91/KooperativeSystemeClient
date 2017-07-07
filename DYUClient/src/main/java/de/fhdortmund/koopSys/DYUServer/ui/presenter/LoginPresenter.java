@@ -24,13 +24,16 @@ public class LoginPresenter extends Presenter<LoginView> implements LoginListene
 
 	@Autowired
 	LoginRestClient loginClient;
-
+	
 	@Autowired
 	private EventBus.SessionEventBus eventBus;
 
 	@Override
 	public void login(User user) {
 
+		
+
+		
 		log.info("login");
 		loginClient.create(user);
 		log.info("publish LoginEvent");
