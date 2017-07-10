@@ -3,7 +3,6 @@ package de.fhdortmund.koopSys.DYUServer.ui.presenter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.spring.events.EventBus;
 import org.vaadin.spring.navigator.Presenter;
 import org.vaadin.spring.navigator.annotation.VaadinPresenter;
 
@@ -19,7 +18,7 @@ public class LobbyPresenter extends Presenter<LobbyView> implements LobbyListene
 
 	
 	
-	
+		
 	
 	@Autowired
 	private LectureRestClient lecClient;

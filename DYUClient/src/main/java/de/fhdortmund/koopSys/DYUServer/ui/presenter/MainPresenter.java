@@ -79,6 +79,7 @@ public class MainPresenter extends Presenter<MainView> {
 
 	private void showLectureAdminView() {
 		
+		
 		getView().setView(adminPresenter.getView());
 	}
 
@@ -107,8 +108,9 @@ public class MainPresenter extends Presenter<MainView> {
 	
 	@EventBusListenerTopic(topic = Event.CREATED_LECTURE)
 	@EventBusListenerMethod(scope = EventScope.SESSION)
-	public void onCreated(View view)
+	public void onCreatedLecture(Lecture lecture)
 	{
+		log.info("Open AdminView");
 		showLectureAdminView();
 	}
 	

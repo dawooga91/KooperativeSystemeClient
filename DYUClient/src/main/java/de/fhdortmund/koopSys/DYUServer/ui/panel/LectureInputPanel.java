@@ -39,8 +39,11 @@ public class LectureInputPanel extends VerticalLayout implements InputPanel<Lect
 
 	@Override
 	public Lecture getElement() {
-
-		return new Lecture(tfVlName.getValue(), 0, 0, false);
+		Lecture retLecture = new Lecture();
+		retLecture.setName(tfVlName.getValue());
+		
+		
+		return retLecture;
 	}
 
 	@Override

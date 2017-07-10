@@ -98,8 +98,10 @@ public class NewLectureView extends Window implements View {
 
 					Lecture newLecture = lectureInputPanel.getElement();
 					lectureListener.createLecture(newLecture);
+					
+					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE,this, newLecture);
+					
 					close();
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE,this, this);
 					
 				} else if (pressedBtn == btnCancel)
 					close();
