@@ -30,6 +30,8 @@ public class NewLecturePresenter extends Presenter<NewLectureView> implements Ne
 	@Override
 	public void createLecture(Lecture lecture) {
 		log.info("Try to creat lec");
+		
+		lectureClient.saveLecture(lecture);
 		eventBus.publish(Event.CREATE_LECTURE, this, lecture);
 
 	}

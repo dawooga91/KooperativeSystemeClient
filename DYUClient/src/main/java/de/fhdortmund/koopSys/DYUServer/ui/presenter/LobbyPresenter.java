@@ -19,8 +19,7 @@ public class LobbyPresenter extends Presenter<LobbyView> implements LobbyListene
 
 	
 	
-	@Autowired
-	private EventBus.SessionEventBus eventBus;
+	
 	
 	@Autowired
 	private LectureRestClient lecClient;
