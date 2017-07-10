@@ -1,7 +1,5 @@
 package de.fhdortmund.koopSys.DYUServer.ui.Event;
 
-import org.vaadin.spring.events.EventScope;
-
 /**
  * Events, für den Eventbus
  * 

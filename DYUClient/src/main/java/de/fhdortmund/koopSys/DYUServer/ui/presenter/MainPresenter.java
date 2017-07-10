@@ -9,7 +9,6 @@ import org.vaadin.spring.navigator.annotation.VaadinPresenter;
 
 import com.vaadin.navigator.View;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 
 import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
@@ -34,15 +33,17 @@ public class MainPresenter extends Presenter<MainView> {
 	private LobbyPresenter lobbyPresenter;
 	private NewLecturePresenter newLecturePresenter;
 	private LecturePresenter lecturePresenter;
+	private AdminPresenter adminPresenter;
 
 	@Autowired
 	public MainPresenter(SessionManager sessionManager, LoginPresenter loginPresenter, LobbyPresenter lobbyPresenter,
-			NewLecturePresenter newLecturePresenter,LecturePresenter lecturePresenter) {
+			NewLecturePresenter newLecturePresenter,LecturePresenter lecturePresenter,AdminPresenter adminPresenter) {
 		this.sessionManager = sessionManager;
 		this.loginPresenter = loginPresenter;
 		this.lobbyPresenter = lobbyPresenter;
 		this.newLecturePresenter = newLecturePresenter;
 		this.lecturePresenter = lecturePresenter;
+		this.adminPresenter = adminPresenter;
 
 	}
 
@@ -77,8 +78,8 @@ public class MainPresenter extends Presenter<MainView> {
 	}
 
 	private void showLectureAdminView() {
-		// TODO Auto-generated method stub
-
+		
+		getView().setView(adminPresenter.getView());
 	}
 
 	@EventBusListenerTopic(topic = Event.LOGIN)
