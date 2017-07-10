@@ -18,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 @VaadinPresenter(viewName = LobbyView.NAME)
 public class LobbyPresenter extends Presenter<LobbyView> implements LobbyListener {
 
+	
+	
 	@Autowired
 	private EventBus.SessionEventBus eventBus;
 	@Autowired

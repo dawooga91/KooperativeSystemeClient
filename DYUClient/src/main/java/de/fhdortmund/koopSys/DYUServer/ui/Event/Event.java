@@ -19,5 +19,6 @@ public abstract class Event {
 	public static final String NEW_LECTURE = "NEW_LECTURE";
 	public static final String JOIN = "JOIN";
 	public static final String CANCEL = "CANCEL";
+	public static final String CREATED_LECTURE = "CREATED_LECTURE";
 	
 }

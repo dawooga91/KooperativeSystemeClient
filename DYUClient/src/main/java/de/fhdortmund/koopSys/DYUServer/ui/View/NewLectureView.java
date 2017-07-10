@@ -3,6 +3,7 @@ package de.fhdortmund.koopSys.DYUServer.ui.View;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.spring.events.EventBus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -31,7 +32,10 @@ public class NewLectureView extends Window implements View {
 	*/
 	private static final long serialVersionUID = 1L;
 	public static final String NAME = "de.fhdortmund.koopSys.DYUServer.ui.View.NewLectureView";
-
+	
+	@Autowired
+	private EventBus.SessionEventBus sessionBus;
+	
 	@Autowired
 	NewLectureListener lectureListener;
 
@@ -63,6 +67,8 @@ public class NewLectureView extends Window implements View {
 		VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.addComponent(lectureInputPanel);
 		mainLayout.addComponent(buttonLayout);
+		
+		setContent(mainLayout);
 
 	}
 
@@ -92,6 +98,9 @@ public class NewLectureView extends Window implements View {
 
 					Lecture newLecture = lectureInputPanel.getElement();
 					lectureListener.createLecture(newLecture);
+					close();
+					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE,this, this);
+					
 				} else if (pressedBtn == btnCancel)
 					close();
 			}

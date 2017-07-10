@@ -61,7 +61,7 @@ public class LobbyView extends VerticalLayout implements View {
 	
 	@PostConstruct
 	private void _init() {
-		
+		log.info("Lobby");
 		
 		
 		setSizeFull();

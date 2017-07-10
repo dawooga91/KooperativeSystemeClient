@@ -7,6 +7,7 @@ import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 import org.vaadin.spring.navigator.Presenter;
 import org.vaadin.spring.navigator.annotation.VaadinPresenter;
 
+import com.vaadin.navigator.View;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 
@@ -100,7 +101,15 @@ public class MainPresenter extends Presenter<MainView> {
 	@EventBusListenerMethod(scope = EventScope.SESSION)
 	public void onCreateAdminLec(String string) {
 		log.info("CREAT_Lec");
-		//UI.getCurrent().addWindow(newLecturePresenter.getView());
+		UI.getCurrent().addWindow(newLecturePresenter.getView());
 	}
+	
+	@EventBusListenerTopic(topic = Event.CREATED_LECTURE)
+	@EventBusListenerMethod(scope = EventScope.SESSION)
+	public void onCreated(View view)
+	{
+		showLectureAdminView();
+	}
+	
 
 }

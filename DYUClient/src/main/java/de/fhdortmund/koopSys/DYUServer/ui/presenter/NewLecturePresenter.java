@@ -38,13 +38,6 @@ public class NewLecturePresenter extends Presenter<NewLectureView> implements Ne
 
 	}
 
-	@EventBusListenerTopic(topic = Event.CREATE_LECTURE)
-	@EventBusListenerMethod(scope = EventScope.SESSION)
-	public void onCreatedLecture(Lecture lec) {
-		log.info("create new Lecture");
-		// getView().clearInput();
-		UI.getCurrent().addWindow(getView());
-
-	}
+	
 
 }
