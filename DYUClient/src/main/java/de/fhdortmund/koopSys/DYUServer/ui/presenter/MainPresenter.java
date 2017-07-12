@@ -115,5 +115,11 @@ public class MainPresenter extends Presenter<MainView> {
 		showLectureAdminView(lecture);
 	}
 	
+	@EventBusListenerTopic(topic = Event.DELETE_LECTURE)
+	@EventBusListenerMethod(scope = EventScope.APPLICATION)
+	public void onDeleteLecture() {
+		log.info("try Login");
+		showLobby();
+	}
 
 }
