@@ -84,7 +84,7 @@ public class AdminView extends VerticalLayout implements View {
 				thumps.addComponent(noLabel);
 				thumps.addComponent(userCountLabel);
 				
-		//Ja%
+		//Prozentangabe
 				if(userCount==0  || (yes==0 && no==0)) {
 					prozentLabel = new Label("Es hat noch niemand an der Abstimmung teilgenommen!");
 					}
