@@ -24,18 +24,34 @@ public class LecturePresenter extends Presenter<LectureView> implements LectureL
 		
 		lectureClient.saveLecture(lecture);
 		
-		
-		
 	}
 
 	public void setCurrentLecture(Lecture lecture) {
 		this.lecture=(lectureClient.getLectureByOID(lecture.getOid()));
 	
 	}
+	
 
+	@Override
 	public Lecture getLecture() {
 		return lecture;
 	}
+
+	@Override
+	public void voteYes() {
+		lectureClient.voteYes(lecture);
+		log.info("VoteYes");
+		
+	}
+
+	@Override
+	public void voteNo() {
+		lectureClient.voteNo(lecture);
+		log.info("VoteNO");
+		
+	}
+	
+	
 
 	
 	
