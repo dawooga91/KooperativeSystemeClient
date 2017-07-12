@@ -77,9 +77,9 @@ public class MainPresenter extends Presenter<MainView> {
 
 	}
 
-	private void showLectureAdminView() {
+	private void showLectureAdminView(Lecture lecture) {
 		
-		
+		lecturePresenter.setCurrentLecture(lecture);
 		getView().setView(adminPresenter.getView());
 	}
 
@@ -112,7 +112,7 @@ public class MainPresenter extends Presenter<MainView> {
 	public void onCreatedLecture(Lecture lecture)
 	{
 		log.info("Open AdminView");
-		showLectureAdminView();
+		showLectureAdminView(lecture);
 	}
 	
 

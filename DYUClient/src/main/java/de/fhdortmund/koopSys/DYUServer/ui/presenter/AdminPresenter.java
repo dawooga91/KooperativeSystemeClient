@@ -5,6 +5,7 @@ import org.vaadin.spring.events.EventBus;
 import org.vaadin.spring.navigator.Presenter;
 import org.vaadin.spring.navigator.annotation.VaadinPresenter;
 
+import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.ui.View.AdminView;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.AdminListener;
 
@@ -16,5 +17,19 @@ public class AdminPresenter extends Presenter<AdminView> implements AdminListene
 
 	@Autowired
 	EventBus.ApplicationEventBus applicationEventBus;
+
+	private Lecture currentLecture;
+
+	@Override
+	public Lecture getCurrentLecture() {
+		
+		return currentLecture;
+	}
+
+	@Override
+	public void setCurrentLecture(Lecture lecture) {
+		currentLecture = lecture;
+		
+	}
 
 }

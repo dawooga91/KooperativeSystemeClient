@@ -159,7 +159,7 @@ public class AdminView extends VerticalLayout implements View {
 				if(button == btnDelete)
 				{
 					log.info("btnDelete pressed");
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_LECTURE, this, adminListener.get);
+					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_LECTURE, this, adminListener.getCurrentLecture());
 				}
 				
 			}
