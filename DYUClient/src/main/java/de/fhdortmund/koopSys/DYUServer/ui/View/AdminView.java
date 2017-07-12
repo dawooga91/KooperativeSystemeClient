@@ -2,7 +2,10 @@ package de.fhdortmund.koopSys.DYUServer.ui.View;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.math.ode.nonstiff.AdamsMoultonIntegrator;
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.spring.events.EventBus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -16,7 +19,11 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.components.grid.SingleSelectionModel;
 
+import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.AdminListener;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +34,9 @@ public class AdminView extends VerticalLayout implements View {
 
 	@Autowired
 	AdminListener adminListener;
+	
+	@Autowired
+	EventBus.SessionEventBus sessionBus;
 
 	private static final long serialVersionUID = 1L;
 	public static final String NAME = "de.fhdortmund.koopSys.DYUServer.ui.View.AdminView";
@@ -117,11 +127,50 @@ public class AdminView extends VerticalLayout implements View {
 		
 
 	}
+	
+@PostConstruct
 
-	@Override
-	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
+	
+	private ClickListener getLobbyListener() {
 
-	}
+		return new ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {			
+				Button button = event.getButton();
+												
+				if(button == btnQuestion)
+				{
+					log.info("btnQuestion pressed");
+					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.NEW_QUESTION, this, "Hallo");
+					
+				}
+				if(button == btnDeleteQuestion)
+				{
+					log.info("btnDeleteQuestion pressed");
+					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_QUESTION, this, "Hallo");
+				}
+				
+				if(button == btnDelete)
+				{
+					log.info("btnDelete pressed");
+					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_LECTURE, this, adminListener.get);
+				}
+				
+			}
+};
+}
+
+
+@Override
+public void enter(ViewChangeEvent event) {
+	// TODO Auto-generated method stub
+	
+}
 
 }
