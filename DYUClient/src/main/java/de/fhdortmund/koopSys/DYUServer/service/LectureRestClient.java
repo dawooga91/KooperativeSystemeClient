@@ -73,9 +73,8 @@ public class LectureRestClient {
 
 	public Boolean vote(Boolean bo,Lecture lec)
 	{
-		String string = "vote/true/"+String.valueOf(lec.getOid());
 		
-		Lecture lecture = target.path(string).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
+		Lecture lecture = target.path("vote/true/"+String.valueOf(lec.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
 		return bo;
 	}
 
