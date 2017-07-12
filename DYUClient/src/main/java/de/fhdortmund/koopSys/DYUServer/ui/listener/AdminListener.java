@@ -6,6 +6,7 @@ public interface AdminListener {
 
 	public Lecture getCurrentLecture();
 	public void setCurrentLecture(Lecture lecture);
+	public void delete();
 	
 	
 

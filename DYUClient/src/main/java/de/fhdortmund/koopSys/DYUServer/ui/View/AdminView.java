@@ -78,6 +78,9 @@ public class AdminView extends VerticalLayout implements View {
 				buttonLayout.addComponent(btnQuestion);
 				buttonLayout.addComponent(btnDeleteQuestion);
 				verticalLayout.addComponent(buttonLayout);
+				btnQuestion.addClickListener(getAdminListener());
+				btnDeleteQuestion.addClickListener(getAdminListener());
+				
 				
 		//Anzeige
 				VerticalLayout lectureLayout = new VerticalLayout();
@@ -112,6 +115,7 @@ public class AdminView extends VerticalLayout implements View {
 		// Button	Vorlesung löschen	
 				btnDelete = new Button("Vorlesung löschen", FontAwesome.TRASH);	
 				verticalLayout.addComponent(btnDelete);
+				btnDelete.addClickListener(getAdminListener());
 				
 				
 		// lobbyPanel
@@ -128,22 +132,15 @@ public class AdminView extends VerticalLayout implements View {
 
 	}
 	
-@PostConstruct
 
 	
-	private ClickListener getLobbyListener() {
-
-		return new ClickListener() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
+	private ClickListener getAdminListener() {
+		ClickListener clickListener = new ClickListener() {
+			
 			@Override
-			public void buttonClick(ClickEvent event) {			
+			public void buttonClick(ClickEvent event) {
 				Button button = event.getButton();
-												
+				log.info("btn pressed");								
 				if(button == btnQuestion)
 				{
 					log.info("btnQuestion pressed");
@@ -159,12 +156,20 @@ public class AdminView extends VerticalLayout implements View {
 				if(button == btnDelete)
 				{
 					log.info("btnDelete pressed");
+					
+					adminListener.delete();
 					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_LECTURE, this, adminListener.getCurrentLecture());
 				}
 				
 			}
-};
-}
+				
+			};
+		
+		return clickListener;
+	}
+
+
+
 
 
 @Override

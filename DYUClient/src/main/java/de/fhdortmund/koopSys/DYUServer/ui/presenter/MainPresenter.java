@@ -79,7 +79,8 @@ public class MainPresenter extends Presenter<MainView> {
 
 	private void showLectureAdminView(Lecture lecture) {
 		
-		lecturePresenter.setCurrentLecture(lecture);
+
+		adminPresenter.setCurrentLecture(lecture);
 		getView().setView(adminPresenter.getView());
 	}
 
@@ -117,7 +118,7 @@ public class MainPresenter extends Presenter<MainView> {
 	
 	@EventBusListenerTopic(topic = Event.DELETE_LECTURE)
 	@EventBusListenerMethod(scope = EventScope.APPLICATION)
-	public void onDeleteLecture() {
+	public void onDeleteLecture(Lecture lecture) {
 		log.info("try Login");
 		showLobby();
 	}

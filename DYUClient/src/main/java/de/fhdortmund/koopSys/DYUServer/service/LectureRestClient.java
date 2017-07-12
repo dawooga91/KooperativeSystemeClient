@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitterReturnValueHandler;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import lombok.extern.slf4j.Slf4j;
@@ -80,6 +81,13 @@ public class LectureRestClient {
 			Lecture lecture = target.path("vote/false/"+String.valueOf(lec.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
 		}
 		return bo;
+	}
+
+	public Lecture remove(Lecture currentLecture) {
+		Lecture responseLecture = target.path("delete"+String.valueOf(currentLecture)).request().accept(MediaType.APPLICATION_JSON_VALUE)
+				.put(Entity.json(currentLecture), Lecture.class);
+		log.info("delete Lecture '{}'", responseLecture);
+		return responseLecture;
 	}
 
 }

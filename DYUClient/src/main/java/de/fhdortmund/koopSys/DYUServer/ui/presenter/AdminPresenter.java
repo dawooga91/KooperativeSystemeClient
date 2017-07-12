@@ -6,6 +6,7 @@ import org.vaadin.spring.navigator.Presenter;
 import org.vaadin.spring.navigator.annotation.VaadinPresenter;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
+import de.fhdortmund.koopSys.DYUServer.service.LectureRestClient;
 import de.fhdortmund.koopSys.DYUServer.ui.View.AdminView;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.AdminListener;
 
@@ -18,6 +19,9 @@ public class AdminPresenter extends Presenter<AdminView> implements AdminListene
 	@Autowired
 	EventBus.ApplicationEventBus applicationEventBus;
 
+	@Autowired
+	private LectureRestClient lecClient;
+	
 	private Lecture currentLecture;
 
 	@Override
@@ -28,7 +32,13 @@ public class AdminPresenter extends Presenter<AdminView> implements AdminListene
 
 	@Override
 	public void setCurrentLecture(Lecture lecture) {
-		currentLecture = lecture;
+		currentLecture = lecture;		
+		System.out.println(currentLecture+"777777777777777777777777777777777777777777777777777777777777777");
+	}
+
+	@Override
+	public void delete() {
+		lecClient.remove(currentLecture);
 		
 	}
 
