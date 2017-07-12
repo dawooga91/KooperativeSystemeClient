@@ -95,6 +95,7 @@ public class MainPresenter extends Presenter<MainView> {
 	@EventBusListenerTopic(topic = Event.JOIN)
 	@EventBusListenerMethod(scope = EventScope.SESSION)
 	public void onJoinLecture(Lecture lecture) {
+		log.info("Join Lecture");
 		showLecture(lecture);
 
 	}

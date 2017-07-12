@@ -1,7 +1,11 @@
 package de.fhdortmund.koopSys.DYUServer.ui.View;
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -72,10 +76,9 @@ public class LobbyView extends VerticalLayout implements View {
 		btnJoin = new Button("beitreten");// Button
 		btnCreate = new Button("Veranstaltung erstellen");// Button
 		btnJoin.setClickShortcut(KeyCode.ENTER);
-		grid = new Grid<>();
 		btnJoin.addClickListener(getLobbyListener());
 		btnCreate.addClickListener(getLobbyListener());
-
+		grid = new Grid<>();
 		lectures = lobbyListener.getLectureList(); 
 		grid.setItems(lectures);
 		grid.setSelectionMode(SelectionMode.SINGLE);
@@ -91,6 +94,9 @@ public class LobbyView extends VerticalLayout implements View {
 		lobbyPanelLayout.setMargin(true);
 		lobbyPanelLayout.addComponent(lobbyForm);
 		lobbyPanelLayout.addComponent(Liste);
+		SingleSelectionModel<Lecture> singleSelect =
+				(SingleSelectionModel<Lecture>) grid.getSelectionModel();
+		
 		
 		
 		// loginPanel
@@ -123,10 +129,13 @@ public class LobbyView extends VerticalLayout implements View {
 				
 				if(button == btnJoin)
 				{
-					SingleSelectionModel<Lecture> singleSelect =
-						      (SingleSelectionModel<Lecture>) grid.getSelectionModel();
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.JOIN,this,singleSelect );
+					Set<Lecture> selectedItems = grid.getSelectedItems();
+					for (Lecture lecture : selectedItems) {
+						sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.JOIN,this,lecture );
+						
+					}
 				}
+				
 				if(button == btnCreate)
 				{
 					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATE_LECTURE, this, "Hallo");

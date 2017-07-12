@@ -27,6 +27,7 @@ public class LecturePresenter extends Presenter<LectureView> implements LectureL
 	}
 
 	public void setCurrentLecture(Lecture lecture) {
+		System.err.println(lecture.getOid());
 		this.lecture=(lectureClient.getLectureByOID(lecture.getOid()));
 	
 	}
@@ -39,14 +40,14 @@ public class LecturePresenter extends Presenter<LectureView> implements LectureL
 
 	@Override
 	public void voteYes() {
-		lectureClient.voteYes(lecture);
+		lectureClient.vote(true,lecture);
 		log.info("VoteYes");
 		
 	}
 
 	@Override
 	public void voteNo() {
-		lectureClient.voteNo(lecture);
+		lectureClient.vote(true,lecture);
 		log.info("VoteNO");
 		
 	}

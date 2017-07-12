@@ -7,6 +7,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -70,15 +71,12 @@ public class LectureRestClient {
 
 	}
 
-	public Boolean voteYes(Lecture lecture) {
-		Boolean ret=target.path("poll/yes/"+String.valueOf(lecture.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).get(Boolean.class);
-		return ret;
-	}
-
-	public Boolean voteNo(Lecture lecture) {
-		Boolean ret=target.path("poll/no/"+String.valueOf(lecture.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).get(Boolean.class);
-		return ret;
+	public Boolean vote(Boolean bo,Lecture lec)
+	{
+		String string = "vote/true/"+String.valueOf(lec.getOid());
 		
+		Lecture lecture = target.path(string).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
+		return bo;
 	}
 
 }
