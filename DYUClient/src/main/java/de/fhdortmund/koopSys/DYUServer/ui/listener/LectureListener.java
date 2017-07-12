@@ -11,5 +11,8 @@ import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 public interface LectureListener {
 
 	public void createNewLecture(Lecture lecture);
+	public Lecture getLecture();
+	public void voteYes();
+	public void voteNo();
 
 }

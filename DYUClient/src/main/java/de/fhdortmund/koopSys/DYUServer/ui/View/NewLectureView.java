@@ -82,7 +82,6 @@ public class NewLectureView extends Window implements View {
 	}
 
 	private ClickListener getButtonListener() {
-		// TODO Auto-generated method stub
 		return new ClickListener() {
 
 			/**

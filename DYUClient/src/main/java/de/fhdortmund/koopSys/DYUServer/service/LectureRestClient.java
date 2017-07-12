@@ -70,4 +70,15 @@ public class LectureRestClient {
 
 	}
 
+	public Boolean voteYes(Lecture lecture) {
+		Boolean ret=target.path("poll/yes/"+String.valueOf(lecture.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).get(Boolean.class);
+		return ret;
+	}
+
+	public Boolean voteNo(Lecture lecture) {
+		Boolean ret=target.path("poll/no/"+String.valueOf(lecture.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).get(Boolean.class);
+		return ret;
+		
+	}
+
 }
