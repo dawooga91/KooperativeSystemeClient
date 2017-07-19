@@ -60,6 +60,7 @@ public class MainPresenter extends Presenter<MainView> {
 
 	private void showLecture(Lecture lecture) {
 		lecturePresenter.setCurrentLecture(lecture);
+
 		getView().setView(lecturePresenter.getView());
 
 	}
@@ -96,6 +97,7 @@ public class MainPresenter extends Presenter<MainView> {
 	public void onJoinLecture(Lecture lecture) {
 		log.info("Join Lecture");
 		lobbyPresenter.join(sessionManager.getIdentity(), lecture);
+
 		showLecture(lecture);
 
 	}
@@ -121,8 +123,8 @@ public class MainPresenter extends Presenter<MainView> {
 		if (lecture != null) {
 			System.out.println(lecture + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			if (lecturePresenter.getLecture() != null) {
+				log.info("kick out");
 				if (lecture.getOid() == lecturePresenter.getLecture().getOid()) {
-					log.info("kick out");
 					showLobby();
 				}
 			}
