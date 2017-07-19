@@ -7,7 +7,6 @@ import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 import org.vaadin.spring.navigator.Presenter;
 import org.vaadin.spring.navigator.annotation.VaadinPresenter;
 
-import com.vaadin.navigator.View;
 import com.vaadin.ui.UI;
 
 import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
@@ -112,6 +111,7 @@ public class MainPresenter extends Presenter<MainView> {
 	@EventBusListenerMethod(scope = EventScope.SESSION)
 	public void onCreatedLecture(Lecture lecture) {
 		log.info("Open AdminView");
+		log.info(Long.toString(lecture.getOid()));
 		showLectureAdminView(lecture);
 	}
 
@@ -120,10 +120,13 @@ public class MainPresenter extends Presenter<MainView> {
 	public void onDeleteLecture(Lecture lecture) {
 		if (lecture != null) {
 			System.out.println(lecture + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-			if (lecture.getOid() == lecturePresenter.getLecture().getOid()) {
-				log.info("kick out");
-				showLobby();
+			if (lecturePresenter.getLecture() != null) {
+				if (lecture.getOid() == lecturePresenter.getLecture().getOid()) {
+					log.info("kick out");
+					showLobby();
+				}
 			}
+
 		}
 	}
 

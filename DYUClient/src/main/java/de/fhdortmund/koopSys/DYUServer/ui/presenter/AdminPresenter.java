@@ -1,6 +1,5 @@
 package de.fhdortmund.koopSys.DYUServer.ui.presenter;
 
-import org.mortbay.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
 import org.vaadin.spring.navigator.Presenter;
@@ -24,27 +23,28 @@ public class AdminPresenter extends Presenter<AdminView> implements AdminListene
 
 	@Autowired
 	private LectureRestClient lecClient;
-	
+
 	private Lecture currentLecture;
 
 	@Override
 	public Lecture getCurrentLecture() {
-		
+
 		return currentLecture;
 	}
 
 	@Override
 	public void setCurrentLecture(Lecture lecture) {
-		currentLecture = lecture;		
+
+		currentLecture = lecture;
 	}
 
 	@Override
 	public void delete() {
-		if(currentLecture!=null)
-		lecClient.remove(currentLecture);
+		if (currentLecture != null)
+			lecClient.remove(currentLecture);
 		else
 			log.error("noCurrentLec");
-		
+
 	}
 
 }

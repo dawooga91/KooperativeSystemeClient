@@ -24,23 +24,21 @@ public class NewLecturePresenter extends Presenter<NewLectureView> implements Ne
 
 	@Autowired
 	LectureRestClient lectureClient;
-	
+
 	@Autowired
 	SessionManager sessionManager;
 
-	@Autowired	
+	@Autowired
 	EventBus.SessionEventBus eventBus;
 
 	@Override
 	public void createLecture(Lecture lecture) {
 		log.info("Try to creat lec");
 		lecture.setAdmin(sessionManager.getIdentity());
-		
-		lectureClient.saveLecture(lecture);
-		eventBus.publish(Event.CREATE_LECTURE, this, lecture);
+		Lecture ret = lectureClient.saveLecture(lecture);
+
+		eventBus.publish(Event.CREATED_LECTURE, this, ret);
 
 	}
-
-	
 
 }

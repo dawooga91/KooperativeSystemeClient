@@ -1,7 +1,5 @@
 package de.fhdortmund.koopSys.DYUServer.service;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
-
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,11 +7,9 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitterReturnValueHandler;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
@@ -58,6 +54,7 @@ public class LectureRestClient {
 		Lecture responseLecture = target.path("create").request().accept(MediaType.APPLICATION_JSON_VALUE)
 				.put(Entity.json(lecture), Lecture.class);
 		log.info("Save Lecture '{}'", responseLecture);
+		log.info(Long.toString(responseLecture.getOid()));
 		return responseLecture;
 	}
 
@@ -75,31 +72,30 @@ public class LectureRestClient {
 
 	}
 
-	public Boolean vote(Boolean bo,Lecture lec)
-	{
+	public Boolean vote(Boolean bo, Lecture lec) {
 		Lecture lecture;
-		if(bo){
-			 lecture = target.path("vote/true/"+String.valueOf(lec.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
-	
-		}else{
-			 lecture = target.path("vote/false/"+String.valueOf(lec.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
+		if (bo) {
+			lecture = target.path("vote/true/" + String.valueOf(lec.getOid())).request()
+					.accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
+
+		} else {
+			lecture = target.path("vote/false/" + String.valueOf(lec.getOid())).request()
+					.accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
 		}
 		return bo;
 	}
 
 	public Lecture remove(Lecture currentLecture) {
-		 target.path("delete/"+String.valueOf(currentLecture.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE)
-				.delete();
+		log.info(Long.toString(currentLecture.getOid()));
+		target.path("delete/" + String.valueOf(currentLecture.getOid())).request().delete();
 		log.info("delete Lecture '{}'", currentLecture);
 		return currentLecture;
 	}
 
-	public void join(User identity,Lecture lec) {
-		target.path("join/"+String.valueOf(identity.getOid())+"/"+String.valueOf(lec.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
-		log.info("Join User '{}'",identity);
+	public void join(User identity, Lecture lec) {
+		target.path("join/" + String.valueOf(identity.getOid()) + "/" + String.valueOf(lec.getOid())).request()
+				.accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
+		log.info("Join User '{}'", identity);
 	}
-
-	
-	
 
 }

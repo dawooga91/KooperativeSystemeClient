@@ -32,10 +32,10 @@ public class NewLectureView extends Window implements View {
 	*/
 	private static final long serialVersionUID = 1L;
 	public static final String NAME = "de.fhdortmund.koopSys.DYUServer.ui.View.NewLectureView";
-	
+
 	@Autowired
 	private EventBus.SessionEventBus sessionBus;
-	
+
 	@Autowired
 	NewLectureListener lectureListener;
 
@@ -67,7 +67,7 @@ public class NewLectureView extends Window implements View {
 		VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.addComponent(lectureInputPanel);
 		mainLayout.addComponent(buttonLayout);
-		
+
 		setContent(mainLayout);
 
 	}
@@ -97,11 +97,12 @@ public class NewLectureView extends Window implements View {
 
 					Lecture newLecture = lectureInputPanel.getElement();
 					lectureListener.createLecture(newLecture);
-					
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE,this, newLecture);
-					
+
+					// sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE,this,
+					// newLecture);
+
 					close();
-					
+
 				} else if (pressedBtn == btnCancel)
 					close();
 			}
