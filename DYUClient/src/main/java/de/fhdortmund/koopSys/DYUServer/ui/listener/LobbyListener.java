@@ -7,5 +7,6 @@ import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 public interface LobbyListener {
 
 	public List<Lecture> getLectureList();
+
 	
 }

@@ -4,6 +4,9 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
+import org.vaadin.spring.events.EventScope;
+import org.vaadin.spring.events.annotation.EventBusListenerMethod;
+import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -19,6 +22,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
+import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
+import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.LectureListener;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,6 +40,8 @@ public class LectureView extends VerticalLayout implements View {
 
 	@Autowired
 	EventBus.SessionEventBus eventBus;
+	@Autowired
+	SessionManager sessionMng;
 	
 	
 	@Autowired
@@ -83,6 +90,8 @@ public class LectureView extends VerticalLayout implements View {
 		pollPanel.setContent(pollPanelLayout);
 		addComponent(pollPanel);
 		setComponentAlignment(pollPanel, Alignment.MIDDLE_CENTER);
+		btnVoteNO.setDisableOnClick(true);
+		btnVoteYes.setDisableOnClick(true);
 		
 
 	}
@@ -100,15 +109,37 @@ public class LectureView extends VerticalLayout implements View {
 				Button clickBtn = event.getButton();
 				if(clickBtn==btnVoteYes){
 					lectureListener.voteYes();
+					btnVoteNO.setEnabled(false);
+					
 				}
 				else if(clickBtn==btnVoteNO)
 				{
 					lectureListener.voteNo();
+					btnVoteYes.setEnabled(false);
 				}
 				
 			}
 		};
 		return clickListener;
+	}
+	
+	@EventBusListenerTopic(topic =de.fhdortmund.koopSys.DYUServer.ui.Event.Event.NEW_QUESTION)
+	@EventBusListenerMethod(scope = EventScope.APPLICATION)
+	public void  onNewQuestion(Lecture lec)
+	{
+		log.info("Testgttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+		if(lec.getOid()==lectureListener.getLecture().getOid()&& lec.getAdmin().getOid()!=sessionMng.getIdentity().getOid())
+		{
+			resetPoll();
+		}
+	}
+
+
+	private void resetPoll() {
+		lblQuestion.setCaption("Haben sie das verstanden?");
+		btnVoteNO.setEnabled(true);
+		btnVoteYes.setEnabled(true);
+		
 	}
 
 	@Override

@@ -37,7 +37,7 @@ public class MainPresenter extends Presenter<MainView> {
 
 	@Autowired
 	public MainPresenter(SessionManager sessionManager, LoginPresenter loginPresenter, LobbyPresenter lobbyPresenter,
-			NewLecturePresenter newLecturePresenter,LecturePresenter lecturePresenter,AdminPresenter adminPresenter) {
+			NewLecturePresenter newLecturePresenter, LecturePresenter lecturePresenter, AdminPresenter adminPresenter) {
 		this.sessionManager = sessionManager;
 		this.loginPresenter = loginPresenter;
 		this.lobbyPresenter = lobbyPresenter;
@@ -60,9 +60,9 @@ public class MainPresenter extends Presenter<MainView> {
 	}
 
 	private void showLecture(Lecture lecture) {
-	lecturePresenter.setCurrentLecture(lecture);
-	getView().setView(lecturePresenter.getView());
-		
+		lecturePresenter.setCurrentLecture(lecture);
+		getView().setView(lecturePresenter.getView());
+
 	}
 
 	private void showLogin() {
@@ -78,7 +78,6 @@ public class MainPresenter extends Presenter<MainView> {
 	}
 
 	private void showLectureAdminView(Lecture lecture) {
-		
 
 		adminPresenter.setCurrentLecture(lecture);
 		getView().setView(adminPresenter.getView());
@@ -97,30 +96,35 @@ public class MainPresenter extends Presenter<MainView> {
 	@EventBusListenerMethod(scope = EventScope.SESSION)
 	public void onJoinLecture(Lecture lecture) {
 		log.info("Join Lecture");
+		lobbyPresenter.join(sessionManager.getIdentity(), lecture);
 		showLecture(lecture);
 
 	}
-	
+
 	@EventBusListenerTopic(topic = Event.CREATE_LECTURE)
 	@EventBusListenerMethod(scope = EventScope.SESSION)
 	public void onCreateAdminLec(String string) {
 		log.info("CREAT_Lec");
 		UI.getCurrent().addWindow(newLecturePresenter.getView());
 	}
-	
+
 	@EventBusListenerTopic(topic = Event.CREATED_LECTURE)
 	@EventBusListenerMethod(scope = EventScope.SESSION)
-	public void onCreatedLecture(Lecture lecture)
-	{
+	public void onCreatedLecture(Lecture lecture) {
 		log.info("Open AdminView");
 		showLectureAdminView(lecture);
 	}
-	
+
 	@EventBusListenerTopic(topic = Event.DELETE_LECTURE)
 	@EventBusListenerMethod(scope = EventScope.APPLICATION)
 	public void onDeleteLecture(Lecture lecture) {
-		log.info("try Login");
-		showLobby();
+		if (lecture != null) {
+			System.out.println(lecture + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+			if (lecture.getOid() == lecturePresenter.getLecture().getOid()) {
+				log.info("kick out");
+				showLobby();
+			}
+		}
 	}
 
 }

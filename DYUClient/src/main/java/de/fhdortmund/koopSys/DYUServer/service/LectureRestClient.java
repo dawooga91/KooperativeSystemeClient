@@ -1,5 +1,7 @@
 package de.fhdortmund.koopSys.DYUServer.service;
 
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
+
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitterReturnValueHandler;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
+import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -74,20 +77,29 @@ public class LectureRestClient {
 
 	public Boolean vote(Boolean bo,Lecture lec)
 	{
+		Lecture lecture;
 		if(bo){
-			Lecture lecture = target.path("vote/true/"+String.valueOf(lec.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
+			 lecture = target.path("vote/true/"+String.valueOf(lec.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
 	
 		}else{
-			Lecture lecture = target.path("vote/false/"+String.valueOf(lec.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
+			 lecture = target.path("vote/false/"+String.valueOf(lec.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
 		}
 		return bo;
 	}
 
 	public Lecture remove(Lecture currentLecture) {
-		Lecture responseLecture = target.path("delete"+String.valueOf(currentLecture)).request().accept(MediaType.APPLICATION_JSON_VALUE)
-				.put(Entity.json(currentLecture), Lecture.class);
-		log.info("delete Lecture '{}'", responseLecture);
-		return responseLecture;
+		 target.path("delete/"+String.valueOf(currentLecture.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE)
+				.delete();
+		log.info("delete Lecture '{}'", currentLecture);
+		return currentLecture;
 	}
+
+	public void join(User identity,Lecture lec) {
+		target.path("join/"+String.valueOf(identity.getOid())+"/"+String.valueOf(lec.getOid())).request().accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
+		log.info("Join User '{}'",identity);
+	}
+
+	
+	
 
 }

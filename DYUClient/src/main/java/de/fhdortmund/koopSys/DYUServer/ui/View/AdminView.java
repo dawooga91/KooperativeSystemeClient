@@ -37,6 +37,8 @@ public class AdminView extends VerticalLayout implements View {
 	
 	@Autowired
 	EventBus.SessionEventBus sessionBus;
+	@Autowired
+	EventBus.ApplicationEventBus applicationEventBus;
 
 	private static final long serialVersionUID = 1L;
 	public static final String NAME = "de.fhdortmund.koopSys.DYUServer.ui.View.AdminView";
@@ -144,21 +146,21 @@ public class AdminView extends VerticalLayout implements View {
 				if(button == btnQuestion)
 				{
 					log.info("btnQuestion pressed");
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.NEW_QUESTION, this, "Hallo");
+					applicationEventBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.NEW_QUESTION, this, adminListener.getCurrentLecture());
 					
 				}
 				if(button == btnDeleteQuestion)
 				{
 					log.info("btnDeleteQuestion pressed");
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_QUESTION, this, "Hallo");
+					applicationEventBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_QUESTION, this, "Hallo");
 				}
 				
 				if(button == btnDelete)
 				{
 					log.info("btnDelete pressed");
 					
+					applicationEventBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_LECTURE, this, adminListener.getCurrentLecture());
 					adminListener.delete();
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_LECTURE, this, adminListener.getCurrentLecture());
 				}
 				
 			}

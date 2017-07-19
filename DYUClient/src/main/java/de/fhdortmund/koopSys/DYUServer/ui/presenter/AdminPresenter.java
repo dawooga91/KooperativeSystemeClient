@@ -1,5 +1,6 @@
 package de.fhdortmund.koopSys.DYUServer.ui.presenter;
 
+import org.mortbay.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
 import org.vaadin.spring.navigator.Presenter;
@@ -9,7 +10,9 @@ import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.service.LectureRestClient;
 import de.fhdortmund.koopSys.DYUServer.ui.View.AdminView;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.AdminListener;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @VaadinPresenter(viewName = AdminView.NAME)
 public class AdminPresenter extends Presenter<AdminView> implements AdminListener {
 
@@ -33,12 +36,14 @@ public class AdminPresenter extends Presenter<AdminView> implements AdminListene
 	@Override
 	public void setCurrentLecture(Lecture lecture) {
 		currentLecture = lecture;		
-		System.out.println(currentLecture+"777777777777777777777777777777777777777777777777777777777777777");
 	}
 
 	@Override
 	public void delete() {
+		if(currentLecture!=null)
 		lecClient.remove(currentLecture);
+		else
+			log.error("noCurrentLec");
 		
 	}
 

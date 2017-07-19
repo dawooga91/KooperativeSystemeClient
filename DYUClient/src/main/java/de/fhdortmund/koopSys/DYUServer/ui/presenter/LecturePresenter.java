@@ -47,7 +47,7 @@ public class LecturePresenter extends Presenter<LectureView> implements LectureL
 
 	@Override
 	public void voteNo() {
-		lectureClient.vote(true,lecture);
+		lectureClient.vote(false,lecture);
 		log.info("VoteNO");
 		
 	}

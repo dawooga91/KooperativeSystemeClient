@@ -7,6 +7,7 @@ import org.vaadin.spring.navigator.Presenter;
 import org.vaadin.spring.navigator.annotation.VaadinPresenter;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
+import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
 import de.fhdortmund.koopSys.DYUServer.service.LectureRestClient;
 import de.fhdortmund.koopSys.DYUServer.ui.View.LobbyView;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.LobbyListener;
@@ -29,6 +30,13 @@ public class LobbyPresenter extends Presenter<LobbyView> implements LobbyListene
 		log.info("d%",allLecture.size());
 		return allLecture;
 	}
+
+	public void join(User identity,Lecture lec) {
+		lecClient.join(identity,lec);
+		
+	}
+
+	
 
 	
 	
