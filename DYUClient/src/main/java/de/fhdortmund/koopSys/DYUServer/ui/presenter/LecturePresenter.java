@@ -17,21 +17,20 @@ public class LecturePresenter extends Presenter<LectureView> implements LectureL
 	@Autowired
 	LectureRestClient lectureClient;
 	private Lecture lecture;
-	
+
 	@Override
 	public void createNewLecture(Lecture lecture) {
 		log.info("CreateLEcture");
-		
+
 		lectureClient.saveLecture(lecture);
-		
+
 	}
 
 	public void setCurrentLecture(Lecture lecture) {
 		System.err.println(lecture.getOid());
-		this.lecture=(lectureClient.getLectureByOID(lecture.getOid()));
-	
+		this.lecture = (lectureClient.getLectureByOID(lecture.getOid()));
+
 	}
-	
 
 	@Override
 	public Lecture getLecture() {
@@ -40,22 +39,23 @@ public class LecturePresenter extends Presenter<LectureView> implements LectureL
 
 	@Override
 	public void voteYes() {
-		lectureClient.vote(true,lecture);
+		lectureClient.vote(true, lecture);
 		log.info("VoteYes");
-		
+
 	}
 
 	@Override
 	public void voteNo() {
-		lectureClient.vote(false,lecture);
+		lectureClient.vote(false, lecture);
 		log.info("VoteNO");
-		
-	}
-	
-	
 
-	
-	
-	
-	
+	}
+
+	@Override
+	public boolean check() {
+		if (lectureClient.getLectureByOID(lecture.getOid()) != null)
+			return true;
+		return false;
+	}
+
 }

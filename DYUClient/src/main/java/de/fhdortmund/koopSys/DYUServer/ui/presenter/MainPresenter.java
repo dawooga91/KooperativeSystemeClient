@@ -1,6 +1,7 @@
 package de.fhdortmund.koopSys.DYUServer.ui.presenter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.spring.events.EventBus;
 import org.vaadin.spring.events.EventScope;
 import org.vaadin.spring.events.annotation.EventBusListenerMethod;
 import org.vaadin.spring.events.annotation.EventBusListenerTopic;
@@ -45,6 +46,9 @@ public class MainPresenter extends Presenter<MainView> {
 		this.adminPresenter = adminPresenter;
 
 	}
+
+	@Autowired
+	EventBus.ApplicationEventBus applicationEventBus;
 
 	/**
 	 * Wird zum starten ausgeführt
@@ -118,18 +122,18 @@ public class MainPresenter extends Presenter<MainView> {
 	}
 
 	@EventBusListenerTopic(topic = Event.DELETE_LECTURE)
-	@EventBusListenerMethod(scope = EventScope.APPLICATION)
+	@EventBusListenerMethod(scope = EventScope.SESSION)
 	public void onDeleteLecture(Lecture lecture) {
-		if (lecture != null) {
-			System.out.println(lecture + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-			if (lecturePresenter.getLecture() != null) {
-				log.info("kick out");
-				if (lecture.getOid() == lecturePresenter.getLecture().getOid()) {
-					showLobby();
-				}
-			}
+		log.info("kick out");
+		showLobby();
+		applicationEventBus.publish(Event.DELETE_LECTURE, lecture);
+	}
 
-		}
+	@EventBusListenerTopic(topic = Event.DELETE_LECTURE)
+	@EventBusListenerMethod(scope = EventScope.APPLICATION)
+	public void onAllDeleteLecture(Lecture lecture) {
+		log.info("App info");
+		// showLobby();
 	}
 
 }

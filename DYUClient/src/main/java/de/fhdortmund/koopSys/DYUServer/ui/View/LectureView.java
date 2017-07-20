@@ -10,6 +10,7 @@ import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
@@ -19,6 +20,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
@@ -42,41 +44,38 @@ public class LectureView extends VerticalLayout implements View {
 	EventBus.SessionEventBus eventBus;
 	@Autowired
 	SessionManager sessionMng;
-	
-	
+	@Autowired
+	EventBus.ApplicationEventBus aPPeventBus;
+
 	@Autowired
 	LectureListener lectureListener;
-	
+
 	private Button btnVoteYes;
 	private Button btnVoteNO;
 	private Label lblQuestion;
 
 	@PostConstruct
 	private void _init() {
-		
+
 		setCaption(lectureListener.getLecture().getName());
 		setSizeFull();
-		
+
 		setSizeFull();
 		FormLayout pollForm = new FormLayout();
-		
-	
+
 		lblQuestion = new Label("Warte auf Umfragen");
-		
-		
-		
+
 		pollForm.addComponent(lblQuestion);
 
 		// Button
 		HorizontalLayout footer = new HorizontalLayout();
 		btnVoteYes = new Button("JA");
 		btnVoteYes.addClickListener(getVoteListener());
-		//btnVoteYes.setClickShortcut(KeyCode.ENTER);
+		// btnVoteYes.setClickShortcut(KeyCode.ENTER);
 		footer.addComponent(btnVoteYes);
-		
+
 		btnVoteNO = new Button("NEIN");
 		footer.addComponent(btnVoteNO);
-		
 
 		// LoginPanel Layout
 		VerticalLayout pollPanelLayout = new VerticalLayout();
@@ -92,13 +91,12 @@ public class LectureView extends VerticalLayout implements View {
 		setComponentAlignment(pollPanel, Alignment.MIDDLE_CENTER);
 		btnVoteNO.setDisableOnClick(true);
 		btnVoteYes.setDisableOnClick(true);
-		
 
 	}
 
 	private ClickListener getVoteListener() {
-		ClickListener clickListener= new ClickListener() {
-			
+		ClickListener clickListener = new ClickListener() {
+
 			/**
 			 * 
 			 */
@@ -106,40 +104,39 @@ public class LectureView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Button clickBtn = event.getButton();
-				if(clickBtn==btnVoteYes){
-					lectureListener.voteYes();
-					btnVoteNO.setEnabled(false);
-					
-				}
-				else if(clickBtn==btnVoteNO)
-				{
-					lectureListener.voteNo();
-					btnVoteYes.setEnabled(false);
-				}
-				
+				if (lectureListener.check()) {
+					Button clickBtn = event.getButton();
+					if (clickBtn == btnVoteYes) {
+						lectureListener.voteYes();
+						btnVoteNO.setEnabled(false);
+
+					} else if (clickBtn == btnVoteNO) {
+						lectureListener.voteNo();
+						btnVoteYes.setEnabled(false);
+					}
+				} else
+					new Notification("Lecture doesnt exist anymore", "Back to Lobby", Notification.Type.WARNING_MESSAGE,
+							true).show(Page.getCurrent());
+				aPPeventBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.Vote, "Refersh");
 			}
 		};
 		return clickListener;
 	}
-	
-	@EventBusListenerTopic(topic =de.fhdortmund.koopSys.DYUServer.ui.Event.Event.NEW_QUESTION)
+
+	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.NEW_QUESTION)
 	@EventBusListenerMethod(scope = EventScope.APPLICATION)
-	public void  onNewQuestion(Lecture lec)
-	{
-		log.info("Testgttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
-		if(lec.getOid()==lectureListener.getLecture().getOid()&& lec.getAdmin().getOid()!=sessionMng.getIdentity().getOid())
-		{
+	public void onNewQuestion(Lecture lec) {
+		if (lec.getOid() == lectureListener.getLecture().getOid()
+				&& lec.getAdmin().getOid() != sessionMng.getIdentity().getOid()) {
 			resetPoll();
 		}
 	}
-
 
 	private void resetPoll() {
 		lblQuestion.setCaption("Haben sie das verstanden?");
 		btnVoteNO.setEnabled(true);
 		btnVoteYes.setEnabled(true);
-		
+
 	}
 
 	@Override
