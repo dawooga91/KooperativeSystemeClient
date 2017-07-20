@@ -17,31 +17,19 @@ import lombok.extern.slf4j.Slf4j;
 @VaadinPresenter(viewName = LobbyView.NAME)
 public class LobbyPresenter extends Presenter<LobbyView> implements LobbyListener {
 
-	
-	
-		
-	
 	@Autowired
 	private LectureRestClient lecClient;
-	
+
 	@Override
 	public List<Lecture> getLectureList() {
 		List<Lecture> allLecture = lecClient.getAllLecture();
-		log.info("d%",allLecture.size());
+		log.info("d%", allLecture.size());
 		return allLecture;
 	}
 
-	public void join(User identity,Lecture lec) {
-		lecClient.join(identity,lec);
-		
+	public void join(User identity, Lecture lec) {
+		lecClient.join(identity, lec);
+
 	}
-
-	
-
-	
-	
-
-	
-	
 
 }

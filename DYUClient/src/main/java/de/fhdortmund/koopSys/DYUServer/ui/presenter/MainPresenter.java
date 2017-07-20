@@ -119,6 +119,7 @@ public class MainPresenter extends Presenter<MainView> {
 		log.info("Open AdminView");
 		log.info(Long.toString(lecture.getOid()));
 		showLectureAdminView(lecture);
+		applicationEventBus.publish(Event.CREATED_LECTURE, this, "Refresh");
 	}
 
 	@EventBusListenerTopic(topic = Event.DELETE_LECTURE)
@@ -126,14 +127,14 @@ public class MainPresenter extends Presenter<MainView> {
 	public void onDeleteLecture(Lecture lecture) {
 		log.info("kick out");
 		showLobby();
-		applicationEventBus.publish(Event.DELETE_LECTURE, lecture);
+		applicationEventBus.publish(Event.DELETE_LECTURE, this, lecture);
 	}
 
 	@EventBusListenerTopic(topic = Event.DELETE_LECTURE)
 	@EventBusListenerMethod(scope = EventScope.APPLICATION)
 	public void onAllDeleteLecture(Lecture lecture) {
 		log.info("App info");
-		// showLobby();
+		// TODO
 	}
 
 }

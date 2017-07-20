@@ -1,16 +1,15 @@
 package de.fhdortmund.koopSys.DYUServer.ui.View;
 
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
+import org.vaadin.spring.events.EventScope;
+import org.vaadin.spring.events.annotation.EventBusListenerMethod;
+import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
@@ -25,9 +24,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.components.grid.SingleSelectionModel;
@@ -50,55 +47,50 @@ public class LobbyView extends VerticalLayout implements View {
 	@Autowired
 	EventBus.SessionEventBus sessionBus;
 	// Components
-		private Button btnJoin;
+	private Button btnJoin;
 
 	private Button btnCreate;
 	private List<Lecture> lectures;
 	private Grid<Lecture> grid;
-	private  Window subWindow;
-	
+	private Window subWindow;
+
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@PostConstruct
 	private void _init() {
+		setCaption("Lobby");
 		log.info("Lobby");
-		
-		
+
 		setSizeFull();
 		FormLayout lobbyForm = new FormLayout();
-		
-		
-		HorizontalLayout Liste = new HorizontalLayout();			
+
+		HorizontalLayout Liste = new HorizontalLayout();
 		btnJoin = new Button("beitreten");// Button
 		btnCreate = new Button("Veranstaltung erstellen");// Button
 		btnJoin.setClickShortcut(KeyCode.ENTER);
 		btnJoin.addClickListener(getLobbyListener());
 		btnCreate.addClickListener(getLobbyListener());
 		grid = new Grid<>();
-		lectures = lobbyListener.getLectureList(); 
+		lectures = lobbyListener.getLectureList();
 		grid.setItems(lectures);
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addColumn(Lecture::getName).setCaption("Vorlesung");
-		
+
 		Liste.addComponent(grid);
 		Liste.addComponent(btnJoin);
 		Liste.addComponent(btnCreate);
-		
-		
+
 		// LobbyPanel Layout
 		HorizontalLayout lobbyPanelLayout = new HorizontalLayout();
 		lobbyPanelLayout.setMargin(true);
 		lobbyPanelLayout.addComponent(lobbyForm);
 		lobbyPanelLayout.addComponent(Liste);
-		SingleSelectionModel<Lecture> singleSelect =
-				(SingleSelectionModel<Lecture>) grid.getSelectionModel();
-		
-		
-		
+		SingleSelectionModel<Lecture> singleSelect = (SingleSelectionModel<Lecture>) grid.getSelectionModel();
+
 		// loginPanel
 		Panel lobbyPanel = new Panel("Lobby");
 		lobbyPanel.setWidthUndefined();
@@ -106,9 +98,15 @@ public class LobbyView extends VerticalLayout implements View {
 		addComponent(lobbyPanel);
 		setComponentAlignment(lobbyPanel, Alignment.MIDDLE_CENTER);
 	}
-	@PostConstruct
 
-	
+	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE)
+	@EventBusListenerMethod(scope = EventScope.APPLICATION)
+	public void onRefreshLobby(String s) {
+		log.info("Refresh lobby");
+		// TODO
+	}
+
+	@PostConstruct
 	private ClickListener getLobbyListener() {
 
 		return new ClickListener() {
@@ -122,31 +120,24 @@ public class LobbyView extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				log.info("Joinbtn pressed");
 				Button button = event.getButton();
-				
+
 				log.info("btn pressed");
-				
-				
-				
-				if(button == btnJoin)
-				{
+
+				if (button == btnJoin) {
 					Set<Lecture> selectedItems = grid.getSelectedItems();
 					for (Lecture lecture : selectedItems) {
-						sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.JOIN,this,lecture );
-						
+						sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.JOIN, this, lecture);
+
 					}
 				}
-				
-				if(button == btnCreate)
-				{
+
+				if (button == btnCreate) {
 					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATE_LECTURE, this, "Hallo");
 				}
-				
+
 			}
 
-			
 		};
 	}
-
-	
 
 }
