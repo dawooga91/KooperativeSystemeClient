@@ -7,9 +7,6 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
-import org.vaadin.spring.events.EventScope;
-import org.vaadin.spring.events.annotation.EventBusListenerMethod;
-import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
@@ -97,13 +94,6 @@ public class LobbyView extends VerticalLayout implements View {
 		lobbyPanel.setContent(lobbyPanelLayout);
 		addComponent(lobbyPanel);
 		setComponentAlignment(lobbyPanel, Alignment.MIDDLE_CENTER);
-	}
-
-	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE)
-	@EventBusListenerMethod(scope = EventScope.APPLICATION)
-	public void onRefreshLobby(String s) {
-		log.info("Refresh lobby");
-		// TODO
 	}
 
 	@PostConstruct

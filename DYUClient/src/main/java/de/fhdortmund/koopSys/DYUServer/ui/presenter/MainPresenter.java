@@ -49,6 +49,7 @@ public class MainPresenter extends Presenter<MainView> {
 
 	@Autowired
 	EventBus.ApplicationEventBus applicationEventBus;
+	private boolean lobby;
 
 	/**
 	 * Wird zum starten ausgeführt
@@ -66,25 +67,26 @@ public class MainPresenter extends Presenter<MainView> {
 		lecturePresenter.setCurrentLecture(lecture);
 
 		getView().setView(lecturePresenter.getView());
-
+		lobby = false;
 	}
 
 	private void showLogin() {
 		log.info("open LoginView");
 		getView().setView(loginPresenter.getView());
-
+		lobby = false;
 	}
 
 	private void showLobby() {
 		log.info("LobbyAufruf");
 		getView().setView(lobbyPresenter.getView());
-
+		lobby = true;
 	}
 
 	private void showLectureAdminView(Lecture lecture) {
 
 		adminPresenter.setCurrentLecture(lecture);
 		getView().setView(adminPresenter.getView());
+		lobby = false;
 	}
 
 	@EventBusListenerTopic(topic = Event.LOGIN)
@@ -137,4 +139,12 @@ public class MainPresenter extends Presenter<MainView> {
 		// TODO
 	}
 
+	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE)
+	@EventBusListenerMethod(scope = EventScope.APPLICATION)
+	public void onRefreshLobby(String s) {
+		log.info("Refresh lobby");
+		// if (lobby) {
+		// Page.getCurrent().reload();
+		// }
+	}
 }
