@@ -53,7 +53,9 @@ public class LobbyView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
+		if (event.getParameters() != null) {
+
+		}
 
 	}
 
@@ -116,13 +118,12 @@ public class LobbyView extends VerticalLayout implements View {
 				if (button == btnJoin) {
 					Set<Lecture> selectedItems = grid.getSelectedItems();
 					for (Lecture lecture : selectedItems) {
-						sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.JOIN, this, lecture);
-
+						// TODO
 					}
 				}
 
 				if (button == btnCreate) {
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATE_LECTURE, this, "Hallo");
+					// TODO
 				}
 
 			}

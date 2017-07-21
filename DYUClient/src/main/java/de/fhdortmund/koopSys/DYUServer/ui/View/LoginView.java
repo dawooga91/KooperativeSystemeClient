@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -49,19 +50,19 @@ public class LoginView extends VerticalLayout implements View {
 	private TextField tfUsername;
 	private Button btnLogin;
 
+	private Navigator navigator;
 
 	@PostConstruct
 	private void _init() {
 
 		setSizeFull();
 		FormLayout loginForm = new FormLayout();
-		
-	
+
 		// Textfield Username
 		tfUsername = new TextField("Username");
 		tfUsername.setIcon(FontAwesome.USER);
 		tfUsername.focus();
-		
+
 		loginForm.addComponent(tfUsername);
 
 		// Button
@@ -84,8 +85,6 @@ public class LoginView extends VerticalLayout implements View {
 		addComponent(loginPanel);
 		setComponentAlignment(loginPanel, Alignment.MIDDLE_CENTER);
 
-		
-			  
 	}
 
 	private ClickListener getLoginListener() {
@@ -100,20 +99,18 @@ public class LoginView extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				log.info("Loginbtn pressed");
-				
-			
+
 				User user = new User(tfUsername.getValue());
 				loginListener.login(user);
-				 
-					
-				
+				navigator.navigateTo("LOBBY");
+
 			}
 		};
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-
+		navigator = getUI().getNavigator();
 	}
 
 }

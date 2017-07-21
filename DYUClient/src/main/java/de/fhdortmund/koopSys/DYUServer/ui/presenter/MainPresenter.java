@@ -13,6 +13,7 @@ import com.vaadin.ui.UI;
 import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
+import de.fhdortmund.koopSys.DYUServer.service.LectureRestClient;
 import de.fhdortmund.koopSys.DYUServer.ui.Event.Event;
 import de.fhdortmund.koopSys.DYUServer.ui.View.MainView;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,10 @@ import lombok.extern.slf4j.Slf4j;
 @VaadinPresenter(viewName = MainView.NAME)
 public class MainPresenter extends Presenter<MainView> {
 
+	private static final String LECTURE2 = "Lecture";
+	private static final String ADMIN = "Admin";
+	private static final String LOBBY = "Lobby";
+	private static final String LOGIN = "Login";
 	private SessionManager sessionManager;
 	private LoginPresenter loginPresenter;
 	private LobbyPresenter lobbyPresenter;
@@ -48,8 +53,14 @@ public class MainPresenter extends Presenter<MainView> {
 	}
 
 	@Autowired
+	LectureRestClient lectureRestClient;
+
+	@Autowired
 	EventBus.ApplicationEventBus applicationEventBus;
-	private boolean lobby;
+
+	private String actualView;
+
+	private Lecture actualLecture;
 
 	/**
 	 * Wird zum starten ausgeführt
@@ -67,26 +78,31 @@ public class MainPresenter extends Presenter<MainView> {
 		lecturePresenter.setCurrentLecture(lecture);
 
 		getView().setView(lecturePresenter.getView());
-		lobby = false;
+		actualView = LECTURE2;
+		actualLecture = lecture;
 	}
 
 	private void showLogin() {
 		log.info("open LoginView");
 		getView().setView(loginPresenter.getView());
-		lobby = false;
+		actualView = LOGIN;
+		actualLecture = null;
 	}
 
 	private void showLobby() {
 		log.info("LobbyAufruf");
 		getView().setView(lobbyPresenter.getView());
-		lobby = true;
+		actualView = LOBBY;
+		actualLecture = null;
+
 	}
 
 	private void showLectureAdminView(Lecture lecture) {
 
-		adminPresenter.setCurrentLecture(lecture);
+		adminPresenter.setCurrentLecture(lectureRestClient.getLectureByOID(lecture.getOid()));
 		getView().setView(adminPresenter.getView());
-		lobby = false;
+		actualView = ADMIN;
+		actualLecture = lecture;
 	}
 
 	@EventBusListenerTopic(topic = Event.LOGIN)
@@ -139,12 +155,26 @@ public class MainPresenter extends Presenter<MainView> {
 		// TODO
 	}
 
-	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE)
-	@EventBusListenerMethod(scope = EventScope.APPLICATION)
+	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.REFRESH)
+	@EventBusListenerMethod(scope = EventScope.SESSION)
 	public void onRefreshLobby(String s) {
-		log.info("Refresh lobby");
-		// if (lobby) {
-		// Page.getCurrent().reload();
-		// }
+		log.info("Refresh lobby{}", actualView);
+
+		switch (actualView) {
+		case LOBBY:
+			showLobby();
+			break;
+		case ADMIN:
+			// showLectureAdminView(actualLecture);
+			break;
+		case LOGIN:
+			showLogin();
+			break;
+		case LECTURE2:
+			showLecture(actualLecture);
+			break;
+		default:
+			break;
+		}
 	}
 }

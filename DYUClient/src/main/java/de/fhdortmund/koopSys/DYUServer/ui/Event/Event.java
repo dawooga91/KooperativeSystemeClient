@@ -24,4 +24,5 @@ public abstract class Event {
 	public static final String DELETE_QUESTION = "DELETE_QUESTION";
 	public static final String NEW_QUESTION = "NEW_QUESTION";
 	public static final String Vote = "VOTE";
+	public static final String REFRESH = "REFRESH";
 }

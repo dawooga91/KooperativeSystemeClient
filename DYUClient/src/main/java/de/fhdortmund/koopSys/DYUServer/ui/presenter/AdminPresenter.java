@@ -22,7 +22,7 @@ public class AdminPresenter extends Presenter<AdminView> implements AdminListene
 	EventBus.ApplicationEventBus applicationEventBus;
 
 	@Autowired
-	private LectureRestClient lecClient;
+	private LectureRestClient lectureClient;
 
 	private Lecture currentLecture;
 
@@ -41,10 +41,16 @@ public class AdminPresenter extends Presenter<AdminView> implements AdminListene
 	@Override
 	public void delete() {
 		if (currentLecture != null)
-			lecClient.remove(currentLecture);
+			lectureClient.remove(currentLecture);
 		else
 			log.error("noCurrentLec");
 
+	}
+
+	@Override
+	public int[] getVotes(Lecture lec) {
+		log.info("{}", lectureClient.getPoll(lec.getOid()).getPoll());
+		return lectureClient.getPoll(lec.getOid()).getPoll();
 	}
 
 }

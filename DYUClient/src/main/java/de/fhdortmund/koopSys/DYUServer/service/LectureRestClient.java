@@ -66,9 +66,8 @@ public class LectureRestClient {
 	}
 
 	public Lecture getPoll(long oid) {
-		Lecture lecture = target.path("poll/" + String.valueOf(oid)).request().accept(MediaType.APPLICATION_JSON_VALUE)
-				.get(Lecture.class);
-		return lecture;
+		log.info("Poll der Vorlesung{}", getLectureByOID(oid).getPoll());
+		return getLectureByOID(oid);
 
 	}
 

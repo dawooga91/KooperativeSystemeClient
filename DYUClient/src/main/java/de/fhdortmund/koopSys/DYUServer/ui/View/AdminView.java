@@ -54,6 +54,8 @@ public class AdminView extends VerticalLayout implements View {
 	private int no = 0;
 	private int prozent = 0;
 
+	private Button refreshButton;
+
 	@PostConstruct
 	private void _init() {
 		setSizeFull();
@@ -69,17 +71,21 @@ public class AdminView extends VerticalLayout implements View {
 		// Button Frage stellen & Frage schließen
 		HorizontalLayout buttonLayout = new HorizontalLayout();
 		btnQuestion = new Button("Frage stellen");
-		btnDeleteQuestion = new Button("Frage schließen", FontAwesome.TIMES);
+		btnDeleteQuestion = new Button("Frage schließen");
+		refreshButton = new Button("Aktualisieren");
 		buttonLayout.addComponent(btnQuestion);
 		buttonLayout.addComponent(btnDeleteQuestion);
+		buttonLayout.addComponent(refreshButton);
 		verticalLayout.addComponent(buttonLayout);
+		refreshButton.addClickListener(getAdminListener());
 		btnQuestion.addClickListener(getAdminListener());
 		btnDeleteQuestion.addClickListener(getAdminListener());
 
 		// Anzeige
 		VerticalLayout lectureLayout = new VerticalLayout();
 		questionLabel = new Label(Frage);
-
+		setVotes();
+		log.info("{}{}", yes, no);
 		HorizontalLayout thumps = new HorizontalLayout();
 		yesLabel = new Label("" + yes);
 		yesLabel.setIcon(FontAwesome.THUMBS_UP);
@@ -146,6 +152,11 @@ public class AdminView extends VerticalLayout implements View {
 							adminListener.getCurrentLecture());
 					adminListener.delete();
 				}
+				if (button == refreshButton) {
+					setVotes();
+					// sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.REFRESH,
+					// this, "Refresh");
+				}
 
 			}
 
@@ -154,9 +165,19 @@ public class AdminView extends VerticalLayout implements View {
 		return clickListener;
 	}
 
+	private void setVotes() {
+		int[] votes = adminListener.getVotes(adminListener.getCurrentLecture());
+		yes = votes[0];
+		no = votes[1];
+		yesLabel = new Label("" + yes);
+		noLabel = new Label("" + no);
+		userCountLabel = new Label("" + userCount);
+		log.info("set Votes");
+
+	}
+
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -34,7 +34,10 @@ public class NewLectureView extends Window implements View {
 	public static final String NAME = "de.fhdortmund.koopSys.DYUServer.ui.View.NewLectureView";
 
 	@Autowired
-	private EventBus.SessionEventBus sessionBus;
+	EventBus.SessionEventBus sessionBus;
+
+	@Autowired
+	EventBus.ApplicationEventBus applicationBus;
 
 	@Autowired
 	NewLectureListener lectureListener;
@@ -98,8 +101,7 @@ public class NewLectureView extends Window implements View {
 					Lecture newLecture = lectureInputPanel.getElement();
 					lectureListener.createLecture(newLecture);
 
-					// sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE,this,
-					// newLecture);
+					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.REFRESH, this, newLecture);
 
 					close();
 
