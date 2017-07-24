@@ -5,6 +5,7 @@ import org.vaadin.spring.events.EventBus;
 import org.vaadin.spring.navigator.Presenter;
 import org.vaadin.spring.navigator.annotation.VaadinPresenter;
 
+import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
 import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
 import de.fhdortmund.koopSys.DYUServer.service.LoginRestClient;
 import de.fhdortmund.koopSys.DYUServer.ui.View.LoginView;
@@ -20,7 +21,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @VaadinPresenter(viewName = LoginView.NAME)
 public class LoginPresenter extends Presenter<LoginView> implements LoginListener {
+	
+	@Autowired
+	private SessionManager sessionManager;
 
+	
 	@Autowired
 	LoginRestClient loginClient;
 
@@ -32,6 +37,7 @@ public class LoginPresenter extends Presenter<LoginView> implements LoginListene
 
 		log.info("login");
 		loginClient.create(user);
+		sessionManager.setIdentity(user);
 		log.info("publish LoginEvent");
 
 	}

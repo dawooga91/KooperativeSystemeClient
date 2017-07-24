@@ -34,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Title("DYU-App")
 @Theme("default")
 public class MainUI extends UI {
+	private static final String NEWLECTURE = "NEW_LECTURE";
 	private static final String LECTURE = "LECTURE";
 	private static final String ADMIN = "ADMIN";
 	private static final String LOGIN = "LOGIN";
@@ -51,13 +52,11 @@ public class MainUI extends UI {
 	@Autowired
 	private LobbyPresenter lobbyPresenter;
 	@Autowired
-	private NewLecturePresenter newLecturePresenter;
-	@Autowired
 	private LecturePresenter lecturePresenter;
 	@Autowired
 	private AdminPresenter adminPresenter;
 	@Autowired
-	EventBus.ApplicationEventBus applicationEventBus;
+	private NewLecturePresenter newLecturePresenter;
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -66,6 +65,9 @@ public class MainUI extends UI {
 		log.info("Starting UI");
 		navigator.addView(LOBBY, lobbyPresenter.getView());
 		navigator.addView(LOGIN, loginPresenter.getView());
+		navigator.addView(NEWLECTURE, newLecturePresenter.getView());
+		//navigator.addView(ADMIN, adminPresenter.getView());
+		navigator.addView(LECTURE, lecturePresenter.getView());
 		start();
 
 	}
@@ -78,71 +80,12 @@ public class MainUI extends UI {
 
 	}
 
-	private void showLecture(Lecture lecture) {
-		lecturePresenter.setCurrentLecture(lecture);
-		navigator.navigateTo(LECTURE);
-	}
+	
 
-	private void showLogin() {
-		navigator.navigateTo(LOGIN);
-	}
+	
 
-	private void showLobby() {
-		navigator.navigateTo(LOBBY);
-	}
+	
 
-	private void showLectureAdminView(Lecture lecture) {
-		navigator.navigateTo(ADMIN);
-	}
-
-	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.LOGIN)
-	@EventBusListenerMethod(scope = EventScope.SESSION)
-	public void onLogin(User user) {
-		log.info("try Login");
-		sessionManager.setIdentity(user);
-
-		showLobby();
-	}
-
-	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.JOIN)
-	@EventBusListenerMethod(scope = EventScope.SESSION)
-	public void onJoinLecture(Lecture lecture) {
-		log.info("Join Lecture");
-		lobbyPresenter.join(sessionManager.getIdentity(), lecture);
-
-		showLecture(lecture);
-
-	}
-
-	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATE_LECTURE)
-	@EventBusListenerMethod(scope = EventScope.SESSION)
-	public void onCreateAdminLec(String string) {
-		log.info("CREAT_Lec");
-		UI.getCurrent().addWindow(newLecturePresenter.getView());
-	}
-
-	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE)
-	@EventBusListenerMethod(scope = EventScope.SESSION)
-	public void onCreatedLecture(Lecture lecture) {
-		log.info("Open AdminView");
-		log.info(Long.toString(lecture.getOid()));
-		showLectureAdminView(lecture);
-		applicationEventBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.CREATED_LECTURE, this, "Refresh");
-	}
-
-	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_LECTURE)
-	@EventBusListenerMethod(scope = EventScope.SESSION)
-	public void onDeleteLecture(Lecture lecture) {
-		log.info("kick out");
-		showLobby();
-		applicationEventBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_LECTURE, this, lecture);
-	}
-
-	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_LECTURE)
-	@EventBusListenerMethod(scope = EventScope.APPLICATION)
-	public void onAllDeleteLecture(Lecture lecture) {
-		log.info("App info");
-		// TODO
-	}
+	
 
 }

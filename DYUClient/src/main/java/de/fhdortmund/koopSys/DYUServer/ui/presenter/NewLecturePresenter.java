@@ -1,5 +1,7 @@
 package de.fhdortmund.koopSys.DYUServer.ui.presenter;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
 import org.vaadin.spring.navigator.Presenter;
@@ -32,12 +34,11 @@ public class NewLecturePresenter extends Presenter<NewLectureView> implements Ne
 	EventBus.SessionEventBus eventBus;
 
 	@Override
-	public void createLecture(Lecture lecture) {
+	public Lecture createLecture(Lecture lecture) {
 		log.info("Try to creat lec");
 		lecture.setAdmin(sessionManager.getIdentity());
 		Lecture ret = lectureClient.saveLecture(lecture);
-
-		eventBus.publish(Event.CREATED_LECTURE, this, ret);
+		return ret;
 
 	}
 

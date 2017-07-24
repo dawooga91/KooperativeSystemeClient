@@ -7,8 +7,12 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
+import org.vaadin.spring.events.EventScope;
+import org.vaadin.spring.events.annotation.EventBusListenerMethod;
+import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringView;
@@ -22,12 +26,13 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.components.grid.SingleSelectionModel;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.LobbyListener;
+import de.fhdortmund.koopSys.DYUServer.ui.presenter.NewLecturePresenter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -43,18 +48,25 @@ public class LobbyView extends VerticalLayout implements View {
 
 	@Autowired
 	EventBus.SessionEventBus sessionBus;
+	
+	
+	@Autowired
+	private NewLecturePresenter newLecturePresenter;
 	// Components
 	private Button btnJoin;
 
 	private Button btnCreate;
 	private List<Lecture> lectures;
 	private Grid<Lecture> grid;
-	private Window subWindow;
+
+	private Navigator navigator;
 
 	@Override
 	public void enter(ViewChangeEvent event) {
+		
+		navigator = UI.getCurrent().getNavigator();
 		if (event.getParameters() != null) {
-
+			grid.setItems(lobbyListener.getLectureList());
 		}
 
 	}
@@ -97,7 +109,8 @@ public class LobbyView extends VerticalLayout implements View {
 		addComponent(lobbyPanel);
 		setComponentAlignment(lobbyPanel, Alignment.MIDDLE_CENTER);
 	}
-
+	
+	
 	@PostConstruct
 	private ClickListener getLobbyListener() {
 
@@ -118,12 +131,12 @@ public class LobbyView extends VerticalLayout implements View {
 				if (button == btnJoin) {
 					Set<Lecture> selectedItems = grid.getSelectedItems();
 					for (Lecture lecture : selectedItems) {
-						// TODO
+						navigator.navigateTo("Lecture"+lecture.getOid());
 					}
 				}
 
 				if (button == btnCreate) {
-					// TODO
+					navigator.navigateTo("NEW_LECTURE");
 				}
 
 			}

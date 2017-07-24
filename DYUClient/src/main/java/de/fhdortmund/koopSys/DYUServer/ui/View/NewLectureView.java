@@ -1,11 +1,15 @@
 package de.fhdortmund.koopSys.DYUServer.ui.View;
 
+import java.util.Collection;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
 
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -15,6 +19,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -26,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @UIScope
 @SpringView(name = NewLectureView.NAME)
-public class NewLectureView extends Window implements View {
+public class NewLectureView extends VerticalLayout implements View {
 	/**
 	* 
 	*/
@@ -47,14 +52,12 @@ public class NewLectureView extends Window implements View {
 	private Button btnCreateLecture;
 
 	private Button btnCancel;
+	private Navigator navigator;
 
 	@PostConstruct
 	private void _init() {
 		setCaption("Neue Vorlesung");
-		center();
-		setModal(true);
-		setClosable(false);
-		setResizable(false);
+		
 
 		lectureInputPanel = new LectureInputPanel();
 
@@ -71,7 +74,6 @@ public class NewLectureView extends Window implements View {
 		mainLayout.addComponent(lectureInputPanel);
 		mainLayout.addComponent(buttonLayout);
 
-		setContent(mainLayout);
 
 	}
 
@@ -99,21 +101,24 @@ public class NewLectureView extends Window implements View {
 					log.info("pressedCreatButton");
 
 					Lecture newLecture = lectureInputPanel.getElement();
-					lectureListener.createLecture(newLecture);
-
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.REFRESH, this, newLecture);
-
-					close();
-
-				} else if (pressedBtn == btnCancel)
-					close();
+					Lecture createLecture = lectureListener.createLecture(newLecture);
+					navigator.navigateTo("ADMIN"+createLecture.getOid());
+					
+					
+				} else if (pressedBtn == btnCancel){
+					navigator.navigateTo("LOBBY");
+			}
 			}
 		};
+		
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-
+		 navigator = getUI().getNavigator();
+		
 	}
 
+	
+	
 }

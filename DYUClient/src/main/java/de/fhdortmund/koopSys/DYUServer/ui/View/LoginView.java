@@ -21,6 +21,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
 import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.LoginListener;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +46,8 @@ public class LoginView extends VerticalLayout implements View {
 	// Listener
 	@Autowired
 	private LoginListener loginListener;
-
+	
+	
 	// Components
 	private TextField tfUsername;
 	private Button btnLogin;
