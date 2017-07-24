@@ -7,9 +7,6 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
-import org.vaadin.spring.events.EventScope;
-import org.vaadin.spring.events.annotation.EventBusListenerMethod;
-import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.Navigator;
@@ -48,8 +45,7 @@ public class LobbyView extends VerticalLayout implements View {
 
 	@Autowired
 	EventBus.SessionEventBus sessionBus;
-	
-	
+
 	@Autowired
 	private NewLecturePresenter newLecturePresenter;
 	// Components
@@ -61,13 +57,13 @@ public class LobbyView extends VerticalLayout implements View {
 
 	private Navigator navigator;
 
+	private Button btnRefresh;
+
 	@Override
 	public void enter(ViewChangeEvent event) {
-		
+		log.info("Refresh");
 		navigator = UI.getCurrent().getNavigator();
-		if (event.getParameters() != null) {
-			grid.setItems(lobbyListener.getLectureList());
-		}
+		grid.setItems(lobbyListener.getLectureList());
 
 	}
 
@@ -79,27 +75,33 @@ public class LobbyView extends VerticalLayout implements View {
 		setSizeFull();
 		FormLayout lobbyForm = new FormLayout();
 
-		HorizontalLayout Liste = new HorizontalLayout();
+		HorizontalLayout liste = new HorizontalLayout();
 		btnJoin = new Button("beitreten");// Button
-		btnCreate = new Button("Veranstaltung erstellen");// Button
 		btnJoin.setClickShortcut(KeyCode.ENTER);
 		btnJoin.addClickListener(getLobbyListener());
+
+		btnCreate = new Button("Veranstaltung erstellen");// Button
 		btnCreate.addClickListener(getLobbyListener());
+
+		btnRefresh = new Button("Aktualisieren");
+		btnRefresh.addClickListener(getLobbyListener());
+
 		grid = new Grid<>();
 		lectures = lobbyListener.getLectureList();
 		grid.setItems(lectures);
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addColumn(Lecture::getName).setCaption("Vorlesung");
 
-		Liste.addComponent(grid);
-		Liste.addComponent(btnJoin);
-		Liste.addComponent(btnCreate);
+		liste.addComponent(grid);
+		liste.addComponent(btnJoin);
+		liste.addComponent(btnCreate);
+		liste.addComponent(btnRefresh);
 
 		// LobbyPanel Layout
 		HorizontalLayout lobbyPanelLayout = new HorizontalLayout();
 		lobbyPanelLayout.setMargin(true);
 		lobbyPanelLayout.addComponent(lobbyForm);
-		lobbyPanelLayout.addComponent(Liste);
+		lobbyPanelLayout.addComponent(liste);
 		SingleSelectionModel<Lecture> singleSelect = (SingleSelectionModel<Lecture>) grid.getSelectionModel();
 
 		// loginPanel
@@ -109,8 +111,7 @@ public class LobbyView extends VerticalLayout implements View {
 		addComponent(lobbyPanel);
 		setComponentAlignment(lobbyPanel, Alignment.MIDDLE_CENTER);
 	}
-	
-	
+
 	@PostConstruct
 	private ClickListener getLobbyListener() {
 
@@ -131,12 +132,16 @@ public class LobbyView extends VerticalLayout implements View {
 				if (button == btnJoin) {
 					Set<Lecture> selectedItems = grid.getSelectedItems();
 					for (Lecture lecture : selectedItems) {
-						navigator.navigateTo("Lecture"+lecture.getOid());
+						navigator.navigateTo("LECTURE" + "/" + lecture.getOid());
 					}
 				}
 
-				if (button == btnCreate) {
+				else if (button == btnCreate) {
 					navigator.navigateTo("NEW_LECTURE");
+				} else if (button == btnRefresh) {
+
+					navigator.getCurrentView().enter(new ViewChangeEvent(navigator, navigator.getCurrentView(),
+							navigator.getCurrentView(), "LOBBY", ""));
 				}
 
 			}

@@ -12,4 +12,10 @@ public interface AdminListener {
 
 	public int[] getVotes(Lecture lec);
 
+	public Lecture getLecture(Long oid);
+
+	public void closePoll();
+
+	public void openPoll();
+
 }

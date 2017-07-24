@@ -4,9 +4,6 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
-import org.vaadin.spring.events.EventScope;
-import org.vaadin.spring.events.annotation.EventBusListenerMethod;
-import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -26,8 +23,6 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
-import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.LectureListener;
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,7 +39,6 @@ public class LectureView extends VerticalLayout implements View {
 
 	@Autowired
 	EventBus.SessionEventBus eventBus;
-	
 
 	@Autowired
 	LectureListener lectureListener;
@@ -53,29 +47,32 @@ public class LectureView extends VerticalLayout implements View {
 	private Button btnVoteNO;
 	private Label lblQuestion;
 	private Navigator navigator;
+	private Button btnRefresh;
 
 	@PostConstruct
 	private void _init() {
 
-		//setCaption(lectureListener.getLecture().getName());
+		// setCaption(lectureListener.getLecture().getName());
 		setSizeFull();
 
 		setSizeFull();
 		FormLayout pollForm = new FormLayout();
 
-		lblQuestion = new Label("Warte auf Umfragen");
-
+		lblQuestion = new Label("Haben Sie das Verstanden");
 		pollForm.addComponent(lblQuestion);
 
 		// Button
 		HorizontalLayout footer = new HorizontalLayout();
 		btnVoteYes = new Button("JA");
 		btnVoteYes.addClickListener(getVoteListener());
-		// btnVoteYes.setClickShortcut(KeyCode.ENTER);
 		footer.addComponent(btnVoteYes);
 
 		btnVoteNO = new Button("NEIN");
 		footer.addComponent(btnVoteNO);
+
+		btnRefresh = new Button("Aktualisieren");
+		btnRefresh.addClickListener(getVoteListener());
+		footer.addComponent(btnRefresh);
 
 		// LoginPanel Layout
 		VerticalLayout pollPanelLayout = new VerticalLayout();
@@ -89,6 +86,7 @@ public class LectureView extends VerticalLayout implements View {
 		pollPanel.setContent(pollPanelLayout);
 		addComponent(pollPanel);
 		setComponentAlignment(pollPanel, Alignment.MIDDLE_CENTER);
+
 		btnVoteNO.setDisableOnClick(true);
 		btnVoteYes.setDisableOnClick(true);
 
@@ -104,6 +102,7 @@ public class LectureView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+
 				if (lectureListener.check()) {
 					Button clickBtn = event.getButton();
 					if (clickBtn == btnVoteYes) {
@@ -113,28 +112,48 @@ public class LectureView extends VerticalLayout implements View {
 					} else if (clickBtn == btnVoteNO) {
 						lectureListener.voteNo();
 						btnVoteYes.setEnabled(false);
+					} else if (clickBtn == btnRefresh) {
+
+						navigator.getCurrentView()
+								.enter(new ViewChangeEvent(navigator, navigator.getCurrentView(),
+										navigator.getCurrentView(), "ADMIN",
+										Long.toString(lectureListener.getLecture().getOid())));
 					}
-				} else
+
+				} else {
 					new Notification("Lecture doesnt exist anymore", "Back to Lobby", Notification.Type.WARNING_MESSAGE,
 							true).show(Page.getCurrent());
-				navigator.navigateTo("LOBBY");
+					navigator.navigateTo("LOBBY");
+				}
 			}
 		};
 		return clickListener;
 	}
 
-	
-
-	private void resetPoll() {
-		lblQuestion.setCaption("Haben sie das verstanden?");
-		btnVoteNO.setEnabled(true);
-		btnVoteYes.setEnabled(true);
-
-	}
+	// private void resetPoll() {
+	// lblQuestion.setCaption("Haben sie das verstanden?");
+	// btnVoteNO.setEnabled(true);
+	// btnVoteYes.setEnabled(true);
+	//
+	// }
 
 	@Override
 	public void enter(ViewChangeEvent event) {
 		navigator = UI.getCurrent().getNavigator();
+		if (event.getParameters() != null) {
+			String parameters = event.getParameters();
+			Long oid = Long.valueOf(parameters);
+			lectureListener.setCurrentLecture(oid);
+
+		}
+		if (lectureListener.getLecture().isOpen()) {
+			lblQuestion = new Label("Haben Sie das verstanden");
+			btnVoteYes.setEnabled(true);
+			btnVoteNO.setEnabled(true);
+		} else {
+			btnVoteNO.setEnabled(false);
+			btnVoteYes.setEnabled(false);
+		}
 	}
 
 }

@@ -24,7 +24,7 @@ public class AdminPresenter extends Presenter<AdminView> implements AdminListene
 	@Autowired
 	private LectureRestClient lectureClient;
 
-	private Lecture currentLecture;
+	private Lecture currentLecture = new Lecture();
 
 	@Override
 	public Lecture getCurrentLecture() {
@@ -49,9 +49,30 @@ public class AdminPresenter extends Presenter<AdminView> implements AdminListene
 
 	@Override
 	public int[] getVotes(Lecture lec) {
-		
+
 		log.info("{}", lectureClient.getPoll(lec.getOid()).getPoll());
-		return lectureClient.getPoll(lec.getOid()).getPoll();
+		if (lectureClient.getPoll(lec.getOid()).getPoll() != null)
+			return lectureClient.getPoll(lec.getOid()).getPoll();
+		else
+			return new int[2];
+	}
+
+	@Override
+	public Lecture getLecture(Long oid) {
+		log.info("{}" + oid);
+		return lectureClient.getLectureByOID(oid);
+	}
+
+	@Override
+	public void closePoll() {
+		lectureClient.close(currentLecture.getOid());
+
+	}
+
+	@Override
+	public void openPoll() {
+		lectureClient.startNewPoll(currentLecture.getOid());
+
 	}
 
 }

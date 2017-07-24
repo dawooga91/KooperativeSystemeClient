@@ -1,7 +1,5 @@
 package de.fhdortmund.koopSys.DYUServer.ui.View;
 
-import java.util.Collection;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,6 @@ import org.vaadin.spring.events.EventBus;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -19,9 +16,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.NewLectureListener;
@@ -57,7 +52,6 @@ public class NewLectureView extends VerticalLayout implements View {
 	@PostConstruct
 	private void _init() {
 		setCaption("Neue Vorlesung");
-		
 
 		lectureInputPanel = new LectureInputPanel();
 
@@ -74,6 +68,7 @@ public class NewLectureView extends VerticalLayout implements View {
 		mainLayout.addComponent(lectureInputPanel);
 		mainLayout.addComponent(buttonLayout);
 
+		addComponent(mainLayout);
 
 	}
 
@@ -102,23 +97,20 @@ public class NewLectureView extends VerticalLayout implements View {
 
 					Lecture newLecture = lectureInputPanel.getElement();
 					Lecture createLecture = lectureListener.createLecture(newLecture);
-					navigator.navigateTo("ADMIN"+createLecture.getOid());
-					
-					
-				} else if (pressedBtn == btnCancel){
+					navigator.navigateTo("ADMIN" + "/" + createLecture.getOid());
+
+				} else if (pressedBtn == btnCancel) {
 					navigator.navigateTo("LOBBY");
-			}
+				}
 			}
 		};
-		
+
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		 navigator = getUI().getNavigator();
-		
+		navigator = getUI().getNavigator();
+
 	}
 
-	
-	
 }

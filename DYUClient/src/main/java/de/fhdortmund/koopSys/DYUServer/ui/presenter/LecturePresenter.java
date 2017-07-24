@@ -58,4 +58,10 @@ public class LecturePresenter extends Presenter<LectureView> implements LectureL
 		return false;
 	}
 
+	@Override
+	public void setCurrentLecture(Long oid) {
+		lecture = lectureClient.getLectureByOID(oid);
+
+	}
+
 }

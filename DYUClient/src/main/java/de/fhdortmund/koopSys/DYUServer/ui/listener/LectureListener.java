@@ -20,4 +20,6 @@ public interface LectureListener {
 
 	public boolean check();
 
+	public void setCurrentLecture(Long oid);
+
 }

@@ -88,7 +88,7 @@ public class AdminView extends VerticalLayout implements View {
 		// Anzeige
 		VerticalLayout lectureLayout = new VerticalLayout();
 		questionLabel = new Label(Frage);
-		setVotes();
+
 		log.info("{}{}", yes, no);
 		HorizontalLayout thumps = new HorizontalLayout();
 		yesLabel = new Label("" + yes);
@@ -140,26 +140,26 @@ public class AdminView extends VerticalLayout implements View {
 				log.info("btn pressed");
 				if (button == btnQuestion) {
 					log.info("btnQuestion pressed");
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.NEW_QUESTION, this,
-							adminListener.getCurrentLecture());
+					adminListener.openPoll();
 
 				}
 				if (button == btnDeleteQuestion) {
 					log.info("btnDeleteQuestion pressed");
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_QUESTION, this, "Hallo");
+					adminListener.closePoll();
 				}
 
 				if (button == btnDelete) {
 					log.info("btnDelete pressed");
 
-					sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.DELETE_LECTURE, this,
-							adminListener.getCurrentLecture());
 					adminListener.delete();
+					navigator.navigateTo("LOBBY");
 				}
 				if (button == refreshButton) {
-					setVotes();
-					// sessionBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.REFRESH,
-					// this, "Refresh");
+
+					navigator.getCurrentView()
+							.enter(new ViewChangeEvent(navigator, navigator.getCurrentView(),
+									navigator.getCurrentView(), "ADMIN",
+									Long.toString(adminListener.getCurrentLecture().getOid())));
 				}
 
 			}
@@ -171,20 +171,31 @@ public class AdminView extends VerticalLayout implements View {
 
 	private void setVotes() {
 		int[] votes = adminListener.getVotes(adminListener.getCurrentLecture());
+		log.info("set Votes{}", votes);
+
 		yes = votes[0];
 		no = votes[1];
-		yesLabel = new Label("" + yes);
-		noLabel = new Label("" + no);
-		userCountLabel = new Label("" + userCount);
-		log.info("set Votes");
+		userCount = yes + no;
+		yesLabel.setValue(Integer.toString(yes));
+		noLabel.setValue(Integer.toString(no));
+		userCountLabel.setValue(Integer.toString(userCount));
+		;
 
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
 		navigator = UI.getCurrent().getNavigator();
-		
-		
+		if (event.getParameters() != null) {
+			String parameters = event.getParameters();
+
+			Long oid = Long.valueOf(parameters);
+
+			adminListener.setCurrentLecture(adminListener.getLecture(oid));
+			setVotes();
+
+		}
+		log.info("{}", yesLabel);
 	}
 
 }

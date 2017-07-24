@@ -58,16 +58,17 @@ public class LectureRestClient {
 		return responseLecture;
 	}
 
-	public Lecture startNewPoll(long oid) {
-		Lecture lecture = target.path("poll/new/" + String.valueOf(oid)).request()
-				.accept(MediaType.APPLICATION_JSON_VALUE).get(Lecture.class);
-		return lecture;
+	public Lecture getPoll(long oid) {
+		log.info("Poll der Vorlesung{}", getLectureByOID(oid).getPoll());
+
+		return getLectureByOID(oid);
 
 	}
 
-	public Lecture getPoll(long oid) {
-		log.info("Poll der Vorlesung{}", getLectureByOID(oid).getPoll());
-		return getLectureByOID(oid);
+	public Lecture startNewPoll(long oid) {
+		Lecture lectureByOID = getLectureByOID(oid);
+		return target.path("poll/new/" + String.valueOf(oid)).request().accept(MediaType.APPLICATION_JSON_VALUE)
+				.put(Entity.json(lectureByOID), Lecture.class);
 
 	}
 
@@ -95,6 +96,12 @@ public class LectureRestClient {
 		target.path("join/" + String.valueOf(identity.getOid()) + "/" + String.valueOf(lec.getOid())).request()
 				.accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(lec), Lecture.class);
 		log.info("Join User '{}'", identity);
+	}
+
+	public void close(long oid) {
+		target.path("close" + String.valueOf(oid)).request().accept(MediaType.APPLICATION_JSON_VALUE)
+				.put(Entity.json(oid), Long.class);
+
 	}
 
 }
