@@ -49,6 +49,7 @@ public class AdminPresenter extends Presenter<AdminView> implements AdminListene
 
 	@Override
 	public int[] getVotes(Lecture lec) {
+		
 		log.info("{}", lectureClient.getPoll(lec.getOid()).getPoll());
 		return lectureClient.getPoll(lec.getOid()).getPoll();
 	}

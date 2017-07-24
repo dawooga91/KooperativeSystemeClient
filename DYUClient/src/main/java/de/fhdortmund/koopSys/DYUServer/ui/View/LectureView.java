@@ -8,6 +8,7 @@ import org.vaadin.spring.events.EventScope;
 import org.vaadin.spring.events.annotation.EventBusListenerMethod;
 import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
@@ -22,6 +23,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
@@ -42,10 +44,7 @@ public class LectureView extends VerticalLayout implements View {
 
 	@Autowired
 	EventBus.SessionEventBus eventBus;
-	@Autowired
-	SessionManager sessionMng;
-	@Autowired
-	EventBus.ApplicationEventBus aPPeventBus;
+	
 
 	@Autowired
 	LectureListener lectureListener;
@@ -53,11 +52,12 @@ public class LectureView extends VerticalLayout implements View {
 	private Button btnVoteYes;
 	private Button btnVoteNO;
 	private Label lblQuestion;
+	private Navigator navigator;
 
 	@PostConstruct
 	private void _init() {
 
-		setCaption(lectureListener.getLecture().getName());
+		//setCaption(lectureListener.getLecture().getName());
 		setSizeFull();
 
 		setSizeFull();
@@ -117,20 +117,13 @@ public class LectureView extends VerticalLayout implements View {
 				} else
 					new Notification("Lecture doesnt exist anymore", "Back to Lobby", Notification.Type.WARNING_MESSAGE,
 							true).show(Page.getCurrent());
-				aPPeventBus.publish(de.fhdortmund.koopSys.DYUServer.ui.Event.Event.Vote, "Refersh");
+				navigator.navigateTo("LOBBY");
 			}
 		};
 		return clickListener;
 	}
 
-	@EventBusListenerTopic(topic = de.fhdortmund.koopSys.DYUServer.ui.Event.Event.NEW_QUESTION)
-	@EventBusListenerMethod(scope = EventScope.APPLICATION)
-	public void onNewQuestion(Lecture lec) {
-		if (lec.getOid() == lectureListener.getLecture().getOid()
-				&& lec.getAdmin().getOid() != sessionMng.getIdentity().getOid()) {
-			resetPoll();
-		}
-	}
+	
 
 	private void resetPoll() {
 		lblQuestion.setCaption("Haben sie das verstanden?");
@@ -141,8 +134,7 @@ public class LectureView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-
+		navigator = UI.getCurrent().getNavigator();
 	}
 
 }

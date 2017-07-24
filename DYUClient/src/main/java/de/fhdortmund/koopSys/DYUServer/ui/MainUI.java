@@ -66,7 +66,7 @@ public class MainUI extends UI {
 		navigator.addView(LOBBY, lobbyPresenter.getView());
 		navigator.addView(LOGIN, loginPresenter.getView());
 		navigator.addView(NEWLECTURE, newLecturePresenter.getView());
-		//navigator.addView(ADMIN, adminPresenter.getView());
+		navigator.addView(ADMIN, adminPresenter.getView());
 		navigator.addView(LECTURE, lecturePresenter.getView());
 		start();
 

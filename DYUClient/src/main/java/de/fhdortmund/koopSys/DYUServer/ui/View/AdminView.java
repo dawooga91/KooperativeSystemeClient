@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
 
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -18,6 +19,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.fhdortmund.koopSys.DYUServer.ui.listener.AdminListener;
@@ -55,6 +57,8 @@ public class AdminView extends VerticalLayout implements View {
 	private int prozent = 0;
 
 	private Button refreshButton;
+
+	private Navigator navigator;
 
 	@PostConstruct
 	private void _init() {
@@ -178,7 +182,9 @@ public class AdminView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-
+		navigator = UI.getCurrent().getNavigator();
+		
+		
 	}
 
 }
