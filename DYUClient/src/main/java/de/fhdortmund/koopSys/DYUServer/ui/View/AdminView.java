@@ -134,6 +134,11 @@ public class AdminView extends VerticalLayout implements View {
 	private ClickListener getAdminListener() {
 		ClickListener clickListener = new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Button button = event.getButton();

@@ -29,7 +29,6 @@ import com.vaadin.ui.components.grid.SingleSelectionModel;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.LobbyListener;
-import de.fhdortmund.koopSys.DYUServer.ui.presenter.NewLecturePresenter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -46,8 +45,6 @@ public class LobbyView extends VerticalLayout implements View {
 	@Autowired
 	EventBus.SessionEventBus sessionBus;
 
-	@Autowired
-	private NewLecturePresenter newLecturePresenter;
 	// Components
 	private Button btnJoin;
 

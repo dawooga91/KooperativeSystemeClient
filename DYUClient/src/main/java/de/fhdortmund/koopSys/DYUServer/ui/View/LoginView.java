@@ -9,6 +9,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
@@ -17,11 +18,11 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
 import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.LoginListener;
 import lombok.extern.slf4j.Slf4j;
@@ -46,8 +47,7 @@ public class LoginView extends VerticalLayout implements View {
 	// Listener
 	@Autowired
 	private LoginListener loginListener;
-	
-	
+
 	// Components
 	private TextField tfUsername;
 	private Button btnLogin;
@@ -101,10 +101,13 @@ public class LoginView extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				log.info("Loginbtn pressed");
-
-				User user = new User(tfUsername.getValue());
-				loginListener.login(user);
-				navigator.navigateTo("LOBBY");
+				if (tfUsername.getValue().length() > 4) {
+					User user = new User(tfUsername.getValue());
+					loginListener.login(user);
+					navigator.navigateTo("LOBBY");
+				} else
+					new Notification("Nutzername ungueltig", "Mindestens 4 Buchstaben",
+							Notification.Type.WARNING_MESSAGE, true).show(Page.getCurrent());
 
 			}
 		};

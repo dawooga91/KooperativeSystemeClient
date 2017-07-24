@@ -9,6 +9,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -16,6 +17,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
@@ -94,11 +96,13 @@ public class NewLectureView extends VerticalLayout implements View {
 				Button pressedBtn = event.getButton();
 				if (pressedBtn == btnCreateLecture) {
 					log.info("pressedCreatButton");
-
-					Lecture newLecture = lectureInputPanel.getElement();
-					Lecture createLecture = lectureListener.createLecture(newLecture);
-					navigator.navigateTo("ADMIN" + "/" + createLecture.getOid());
-
+					if (lectureInputPanel.getElement().getName().length() > 4) {
+						Lecture newLecture = lectureInputPanel.getElement();
+						Lecture createLecture = lectureListener.createLecture(newLecture);
+						navigator.navigateTo("ADMIN" + "/" + createLecture.getOid());
+					} else
+						new Notification("Name ungueltig", "Mindestens 4 Buchstaben", Notification.Type.WARNING_MESSAGE,
+								true).show(Page.getCurrent());
 				} else if (pressedBtn == btnCancel) {
 					navigator.navigateTo("LOBBY");
 				}

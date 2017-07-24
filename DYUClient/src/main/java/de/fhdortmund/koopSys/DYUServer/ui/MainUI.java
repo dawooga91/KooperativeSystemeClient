@@ -1,10 +1,6 @@
 package de.fhdortmund.koopSys.DYUServer.ui;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.spring.events.EventBus;
-import org.vaadin.spring.events.EventScope;
-import org.vaadin.spring.events.annotation.EventBusListenerMethod;
-import org.vaadin.spring.events.annotation.EventBusListenerTopic;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -14,8 +10,6 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.UI;
 
 import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
-import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
-import de.fhdortmund.koopSys.DYUServer.logic.entities.User;
 import de.fhdortmund.koopSys.DYUServer.ui.presenter.AdminPresenter;
 import de.fhdortmund.koopSys.DYUServer.ui.presenter.LecturePresenter;
 import de.fhdortmund.koopSys.DYUServer.ui.presenter.LobbyPresenter;
@@ -79,13 +73,5 @@ public class MainUI extends UI {
 			navigator.navigateTo(LOGIN);
 
 	}
-
-	
-
-	
-
-	
-
-	
 
 }
