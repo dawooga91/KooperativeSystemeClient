@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
 
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -63,14 +64,14 @@ public class LectureView extends VerticalLayout implements View {
 
 		// Button
 		HorizontalLayout footer = new HorizontalLayout();
-		btnVoteYes = new Button("JA");
+		btnVoteYes = new Button("JA", VaadinIcons.THUMBS_UP);
 		btnVoteYes.addClickListener(getVoteListener());
 		footer.addComponent(btnVoteYes);
 
-		btnVoteNO = new Button("NEIN");
+		btnVoteNO = new Button("NEIN", VaadinIcons.THUMBS_DOWN);
 		footer.addComponent(btnVoteNO);
 
-		btnRefresh = new Button("Aktualisieren");
+		btnRefresh = new Button("Aktualisieren", VaadinIcons.REFRESH);
 		btnRefresh.addClickListener(getVoteListener());
 		footer.addComponent(btnRefresh);
 

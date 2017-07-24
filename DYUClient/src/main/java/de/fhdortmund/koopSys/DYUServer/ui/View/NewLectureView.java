@@ -5,10 +5,10 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
 
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringView;
@@ -60,9 +60,9 @@ public class NewLectureView extends VerticalLayout implements View {
 		HorizontalLayout buttonLayout = new HorizontalLayout();
 		buttonLayout.setMargin(new MarginInfo(false, true, true, true));
 		buttonLayout.setSpacing(true);
-		btnCreateLecture = new Button("Erstellen", FontAwesome.FLOPPY_O);
+		btnCreateLecture = new Button("Erstellen", VaadinIcons.PLUS);
 		buttonLayout.addComponent(btnCreateLecture);
-		btnCancel = new Button("Abbrechen", FontAwesome.TIMES);
+		btnCancel = new Button("Abbrechen", VaadinIcons.ARROW_CIRCLE_LEFT_O);
 		buttonLayout.addComponent(btnCancel);
 		addListener();
 

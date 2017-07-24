@@ -5,10 +5,10 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -62,7 +62,7 @@ public class LoginView extends VerticalLayout implements View {
 
 		// Textfield Username
 		tfUsername = new TextField("Username");
-		tfUsername.setIcon(FontAwesome.USER);
+		tfUsername.setIcon(VaadinIcons.USER);
 		tfUsername.focus();
 
 		loginForm.addComponent(tfUsername);

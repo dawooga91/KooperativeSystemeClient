@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.events.EventBus;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -73,14 +74,14 @@ public class LobbyView extends VerticalLayout implements View {
 		FormLayout lobbyForm = new FormLayout();
 
 		HorizontalLayout liste = new HorizontalLayout();
-		btnJoin = new Button("beitreten");// Button
+		btnJoin = new Button("beitreten", VaadinIcons.CHEVRON_CIRCLE_RIGHT);// Button
 		btnJoin.setClickShortcut(KeyCode.ENTER);
 		btnJoin.addClickListener(getLobbyListener());
 
-		btnCreate = new Button("Veranstaltung erstellen");// Button
+		btnCreate = new Button("Veranstaltung erstellen", VaadinIcons.PLUS);// Button
 		btnCreate.addClickListener(getLobbyListener());
 
-		btnRefresh = new Button("Aktualisieren");
+		btnRefresh = new Button("Aktualisieren", VaadinIcons.REFRESH);
 		btnRefresh.addClickListener(getLobbyListener());
 
 		grid = new Grid<>();
