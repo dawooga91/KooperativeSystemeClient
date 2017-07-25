@@ -69,7 +69,7 @@ public class LoginView extends VerticalLayout implements View {
 
 		// Button
 		HorizontalLayout footer = new HorizontalLayout();
-		btnLogin = new Button("Login");
+		btnLogin = new Button("Login", VaadinIcons.CHECK);
 		btnLogin.addClickListener(getLoginListener());
 		btnLogin.setClickShortcut(KeyCode.ENTER);
 		footer.addComponent(btnLogin);

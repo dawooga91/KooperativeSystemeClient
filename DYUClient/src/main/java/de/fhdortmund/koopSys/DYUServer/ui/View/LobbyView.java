@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.spring.events.EventBus;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
@@ -28,6 +27,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.components.grid.SingleSelectionModel;
 
+import de.fhdortmund.koopSys.DYUServer.logic.SessionManager;
 import de.fhdortmund.koopSys.DYUServer.logic.entities.Lecture;
 import de.fhdortmund.koopSys.DYUServer.ui.listener.LobbyListener;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +44,7 @@ public class LobbyView extends VerticalLayout implements View {
 	private LobbyListener lobbyListener;
 
 	@Autowired
-	EventBus.SessionEventBus sessionBus;
+	SessionManager sessionManager;
 
 	// Components
 	private Button btnJoin;
@@ -130,6 +130,7 @@ public class LobbyView extends VerticalLayout implements View {
 				if (button == btnJoin) {
 					Set<Lecture> selectedItems = grid.getSelectedItems();
 					for (Lecture lecture : selectedItems) {
+						lobbyListener.join(sessionManager.getIdentity(), lecture);
 						navigator.navigateTo("LECTURE" + "/" + lecture.getOid());
 					}
 				}
