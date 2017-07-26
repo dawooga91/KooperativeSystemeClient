@@ -22,4 +22,6 @@ public interface LectureListener {
 
 	public void setCurrentLecture(Long oid);
 
+	public String getQuestion();
+
 }

@@ -75,4 +75,10 @@ public class AdminPresenter extends Presenter<AdminView> implements AdminListene
 
 	}
 
+	@Override
+	public void askQuestion(String question) {
+		lectureClient.askQuestion(currentLecture.getOid(), question);
+
+	}
+
 }

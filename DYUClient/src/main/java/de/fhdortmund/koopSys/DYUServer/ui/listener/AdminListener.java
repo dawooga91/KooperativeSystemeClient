@@ -18,4 +18,6 @@ public interface AdminListener {
 
 	public void openPoll();
 
+	public void askQuestion(String value);
+
 }

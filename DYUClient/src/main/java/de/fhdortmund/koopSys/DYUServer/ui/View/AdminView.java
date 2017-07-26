@@ -145,6 +145,7 @@ public class AdminView extends VerticalLayout implements View {
 				log.info("btn pressed");
 				if (button == btnQuestion) {
 					log.info("btnQuestion pressed");
+					adminListener.askQuestion(question.getValue());
 					adminListener.openPoll();
 
 				}
@@ -198,6 +199,7 @@ public class AdminView extends VerticalLayout implements View {
 
 			adminListener.setCurrentLecture(adminListener.getLecture(oid));
 			setVotes();
+			question.setValue(adminListener.getCurrentLecture().getQuestion());
 
 		}
 		log.info("{}", yesLabel);

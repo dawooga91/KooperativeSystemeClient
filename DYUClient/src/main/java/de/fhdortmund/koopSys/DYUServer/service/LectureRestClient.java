@@ -99,8 +99,14 @@ public class LectureRestClient {
 	}
 
 	public void close(long oid) {
-		target.path("close" + String.valueOf(oid)).request().accept(MediaType.APPLICATION_JSON_VALUE)
+		target.path("close/" + String.valueOf(oid)).request().accept(MediaType.APPLICATION_JSON_VALUE)
 				.put(Entity.json(oid), Long.class);
+
+	}
+
+	public void askQuestion(long oid, String question) {
+		target.path("question/" + String.valueOf(oid) + "/" + question).request()
+				.accept(MediaType.APPLICATION_JSON_VALUE).put(Entity.json(oid), Long.class);
 
 	}
 

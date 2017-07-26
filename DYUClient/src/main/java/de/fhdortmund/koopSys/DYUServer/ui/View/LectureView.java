@@ -148,7 +148,7 @@ public class LectureView extends VerticalLayout implements View {
 
 		}
 		if (lectureListener.getLecture().isOpen()) {
-			lblQuestion = new Label("Haben Sie das verstanden");
+			lblQuestion.setValue(lectureListener.getQuestion());
 			btnVoteYes.setEnabled(true);
 			btnVoteNO.setEnabled(true);
 		} else {

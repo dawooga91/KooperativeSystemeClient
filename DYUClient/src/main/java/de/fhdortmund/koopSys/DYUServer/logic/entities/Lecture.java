@@ -18,9 +18,9 @@ import lombok.NoArgsConstructor;
 public class Lecture extends BaseEntity {
 
 	private String name;
-	int[] poll;
+	private int[] poll;
 	private User admin;
-	List<User> users;
+	private List<User> users;
 	private boolean open;
-
+	private String question;
 }

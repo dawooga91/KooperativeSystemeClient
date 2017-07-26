@@ -64,4 +64,11 @@ public class LecturePresenter extends Presenter<LectureView> implements LectureL
 
 	}
 
+	@Override
+	public String getQuestion() {
+		setCurrentLecture(lecture.getOid());
+
+		return lecture.getQuestion();
+	}
+
 }
