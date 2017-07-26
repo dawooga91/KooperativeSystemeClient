@@ -101,7 +101,7 @@ public class LoginView extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				log.info("Loginbtn pressed");
-				if (tfUsername.getValue().length() > 4) {
+				if (tfUsername.getValue().length() > 3) {
 					User user = new User(tfUsername.getValue());
 					loginListener.login(user);
 					navigator.navigateTo("LOBBY");

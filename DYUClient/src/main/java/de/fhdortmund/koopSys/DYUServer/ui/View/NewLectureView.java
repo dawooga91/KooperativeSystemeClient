@@ -96,7 +96,7 @@ public class NewLectureView extends VerticalLayout implements View {
 				Button pressedBtn = event.getButton();
 				if (pressedBtn == btnCreateLecture) {
 					log.info("pressedCreatButton");
-					if (lectureInputPanel.getElement().getName().length() > 4) {
+					if (lectureInputPanel.getElement().getName().length() > 3) {
 						Lecture newLecture = lectureInputPanel.getElement();
 						Lecture createLecture = lectureListener.createLecture(newLecture);
 						navigator.navigateTo("ADMIN" + "/" + createLecture.getOid());
