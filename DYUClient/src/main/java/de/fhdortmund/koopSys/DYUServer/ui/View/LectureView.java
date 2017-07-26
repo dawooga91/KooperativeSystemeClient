@@ -69,6 +69,7 @@ public class LectureView extends VerticalLayout implements View {
 		footer.addComponent(btnVoteYes);
 
 		btnVoteNO = new Button("NEIN", VaadinIcons.THUMBS_DOWN);
+		btnVoteNO.addClickListener(getVoteListener());
 		footer.addComponent(btnVoteNO);
 
 		btnRefresh = new Button("Aktualisieren", VaadinIcons.REFRESH);
